@@ -22,8 +22,21 @@
         .bin {
             height: 300px;
             width: 150px;
-            background-color: aquamarine;
+            background-size : contain;
         }
+
+        .trash {
+            background-image : url("./images/bins/trashClosed.png")
+        }
+
+        .recycle{
+            background-image : url("./images/bins/recycleClosed.png")
+        }
+
+        .compost {
+            background-image : url("./images/bins/compostClosed.png")
+        }
+        
 
         .item {
             height: 100px;
@@ -79,9 +92,9 @@
         <p class="errorMsg"></p>
 
         <div class="bins">
-            <div class="bin trash">trash</div>
-            <div class="bin recycle">recycle</div>
-            <div class="bin compost">compost</div>
+            <div class="bin trash"></div>
+            <div class="bin recycle"></div>
+            <div class="bin compost"></div>
         </div>
 
     </div>
@@ -211,6 +224,33 @@
         displayScore();
 
         // Helper Functions
+        function isOverlapping(rect1, rect2){
+            return !(rect1.right < rect2.left || 
+                rect1.left > rect2.right || 
+                rect1.bottom < rect2.top || 
+                rect1.top > rect2.bottom)
+        }
+
+        function getOverlappingBin(rect){
+            const bins = document.querySelectorAll(".bin");
+            for(let i = 0; i<bins.length; i++){
+                const binRect = bins[i].getBoundingClientRect();
+                let binName = bins[i].classList.toString().replace("bin", "").trim();
+                if(isOverlapping(rect,binRect)){
+                    return binName;
+                }
+            }
+        }
+
+        function closeAllBins(){
+            const bins = document.querySelectorAll(".bin");
+            for(let i = 0; i<bins.length; i++){
+                let binName = bins[i].classList.toString().replace("bin", "").trim();
+                bins[i].style = `url("./images/bins/${binName}Closed.png")`
+            }
+        }
+
+
         function startOver() {
             inPlay = shuffle(Object.keys(items));
             score = 0;
@@ -228,10 +268,6 @@
         function setNextItem() {
             console.log(inPlay);
             let finishedItem = inPlay.shift();
-
-            if (!lastSuccess) { // check if item is not correct
-                inPlay.push(finishedItem); // put item on end
-            }
 
             if (inPlay.length > 0) { // check if game is over
                 currentItem = inPlay[0];
@@ -286,7 +322,7 @@
 
         function handleDrag(event) {
             if (dragActive) {
-                event.preventDefault();
+               event.preventDefault();
                 if (event.type === "touchstart") {
                     currentX = event.touches[0].clientX - initialX;
                     currentY = event.touches[0].clientY - initialY;
@@ -298,6 +334,14 @@
                 offsetX = currentX;
                 offsetY = currentY;
                 setItemTranslate(currentX,currentY);
+                const binName = getOverlappingBin(event.target.getBoundingClientRect());
+                if(binName){
+                    const overlappingBin = document.querySelectorAll(`.${binName}`)[0];
+                    overlappingBin.style.backgroundImage = `url("./images/bins/${binName}Open.png")`
+                }
+                else{
+                    closeAllBins();
+                }
             }
         }
 
@@ -307,8 +351,12 @@
             dragActive = false;
         }
 
-        function handleDragOver(event) {
-            event.preventDefault();
+        function handleBinMouseEnter(event) {
+            if(dragActive){
+                let element = event.target;
+                let binName = element.classList.toString().replace("bin", "").trim();
+                element.style.backgroundImage = `url("./images/bins/${binName}Open.png")`
+            }
         }
 
         function handleDrop(event) {
@@ -319,13 +367,14 @@
             if (lastSuccess) {
                 itemErr.innerHTML = "Great Job!";
                 // TODO: itemErr.innerHTML=items[currentItem].success;
+                setNextItem();
                 score++;
             }
             else {
                 itemErr.innerHTML = items[currentItem].error;
             }
             displayScore();
-            setNextItem();
+            
 
         }
 
@@ -346,7 +395,7 @@
 
         let bins = document.querySelectorAll(".bin");
         for (let bin of bins) {
-            bin.addEventListener("dragover", handleDragOver, false);
+            bin.addEventListener("mouseenter", handleBinMouseEnter, false);
             bin.addEventListener("dragenter", handleDragEnter, false);
             bin.addEventListener("dragleave", handleDragLeave, false);
             bin.addEventListener("drop", handleDrop, false);
