@@ -51,10 +51,6 @@
         align-self: flex-start;
       }
 
-      .over {
-        background-color: green;
-      }
-
       .errorMsg {
         height: 20px;
       }
@@ -380,6 +376,7 @@
           if (lastSuccess) {
             itemErr.innerHTML = "Great Job!";
             // TODO: itemErr.innerHTML=items[currentItem].success;
+            closeAllBins();
             setNextItem();
             resetItemPosition();
             score++;
@@ -398,44 +395,13 @@
         }
       }
 
-      function handleDrop(event) {
-        event.target.classList.remove("over");
-        let correctBin = items[currentItem].bin;
-        attempted++;
-        lastSuccess = event.target.classList.contains(correctBin);
-        if (lastSuccess) {
-          itemErr.innerHTML = "Great Job!";
-          // TODO: itemErr.innerHTML=items[currentItem].success;
-          setNextItem();
-          score++;
-        } else {
-          itemErr.innerHTML = items[currentItem].error;
-        }
-        displayScore();
-      }
-
-      function handleDragEnter(event) {
-        event.target.classList.add("over");
-      }
-
-      function handleDragLeave(event) {
-        event.target.classList.remove("over");
-      }
-
+      // Event Listeners
       game.addEventListener("touchstart", handleDragStart, false);
       game.addEventListener("mousedown", handleDragStart, false);
       game.addEventListener("touchmove", handleDrag, false);
       game.addEventListener("mousemove", handleDrag, false);
       game.addEventListener("touchend", handleDragEnd, false);
       game.addEventListener("mouseup", handleDragEnd, false);
-
-      let bins = document.querySelectorAll(".bin");
-      for (let bin of bins) {
-        bin.addEventListener("mouseenter", handleBinMouseEnter, false);
-        bin.addEventListener("dragenter", handleDragEnter, false);
-        bin.addEventListener("dragleave", handleDragLeave, false);
-        bin.addEventListener("drop", handleDrop, false);
-      }
     </script>
   </body>
 </html>
