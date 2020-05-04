@@ -349,7 +349,6 @@
           offsetY = currentY;
           setItemTranslate(currentX, currentY);
 
-          //TODO: Extract to function
           const binName = getOverlappingBin(
             event.target.getBoundingClientRect()
           );
@@ -365,11 +364,13 @@
       function handleDragEnd(event) {
         initialX = currentX;
         initialY = currentY;
-        dragActive = false;
 
-        // TODO: Extract to function - see above
         const binName = getOverlappingBin(event.target.getBoundingClientRect());
-        if (binName && event.target.getBoundingClientRect().x !== 8) {
+        if (
+          binName &&
+          event.target.getBoundingClientRect().x !== 8 &&
+          dragActive
+        ) {
           let correctBin = items[currentItem].bin;
           attempted++;
           lastSuccess = correctBin === binName;
@@ -385,6 +386,7 @@
           }
           displayScore();
         }
+        dragActive = false;
       }
 
       function handleBinMouseEnter(event) {
