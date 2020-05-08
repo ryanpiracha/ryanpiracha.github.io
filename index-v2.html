@@ -39,11 +39,10 @@
       .item {
         height: 100px;
         width: 100px;
-        background-color: red;
-        background-size: contain;
-        background-repeat: no-repeat;
         touch-action: none;
         user-select: none;
+        cursor: pointer;
+        background-color: transparent;
       }
 
       .score,
@@ -119,12 +118,12 @@
         apple: {
           bin: "compost",
           error: defaultErr,
-          image: "images/appleicon.png",
+          image: "images/apple2.png",
         },
         "paper-plate": {
           bin: "recycle",
           error: "Oops, try again",
-          image: "images/paperplateicon.png",
+          image: "images/paperplate.png",
         },
         cardboard: {
           bin: "recycle",
@@ -207,7 +206,8 @@
       // DOING STUFF
 
       // Setup current item
-      let inPlay = shuffle(Object.keys(items));
+      //let inPlay = shuffle(Object.keys(items));
+      let inPlay = Object.keys(items);
       let score = 0;
       let attempted = 0;
       let lastSuccess = false;
@@ -221,8 +221,14 @@
 
       // Draging variables
       let dragActive = false;
+      let canDrag = true;
       let currentX, currentY, initialX, initialY;
       let offsetX = (offsetY = 0);
+
+      // Animation Variables
+      let animationStartTime;
+      let animating = false;
+      let animationPos = 0;
 
       // GAME LOOP START
       let currentItem = inPlay[0];
@@ -230,7 +236,25 @@
       displayScore();
 
       // Helper Functions
+      function setEmotion(emotion) {
+        switch (emotion) {
+          case "surprised":
+            itemImg.style.backgroundPositionX = "-100px";
+            break;
+          case "happy":
+            itemImg.style.backgroundPositionX = "-200px";
+            break;
+          case "sad":
+            itemImg.style.backgroundPositionX = "-300px";
+            break;
+          default:
+            itemImg.style.backgroundPositionX = "0px";
+            break;
+        }
+      }
+
       function isOverlapping(rect1, rect2) {
+        let padding = 10; //TODO: fuck with padding
         return !(
           rect1.right < rect2.left ||
           rect1.left > rect2.right ||
@@ -247,6 +271,17 @@
           if (isOverlapping(rect, binRect)) {
             return binName;
           }
+        }
+      }
+
+      function getTranslation(element) {
+        if (element.style.transform) {
+          let str = element.style.transform;
+          return str
+            .replace("translate3d(", "")
+            .replace("px", "")
+            .replace(")", "")
+            .split(", ");
         }
       }
 
@@ -280,6 +315,7 @@
       function setNextItem() {
         console.log(inPlay);
         let finishedItem = inPlay.shift();
+        setEmotion();
 
         if (inPlay.length > 0) {
           // check if game is over
@@ -330,7 +366,9 @@
           initialX = event.clientX - offsetX;
           initialY = event.clientY - offsetY;
         }
-        if (event.target.classList.contains("item")) {
+        if (event.target.classList.contains("item") && canDrag) {
+          //check if you're clicking an item AND if you may drag things
+          setEmotion("surprised");
           dragActive = true;
         }
       }
@@ -362,32 +400,66 @@
       }
 
       function handleDragEnd(event) {
+        if (canDrag) setEmotion();
+
         initialX = currentX;
         initialY = currentY;
 
         const binName = getOverlappingBin(event.target.getBoundingClientRect());
         if (
+          //bin collision
           binName &&
           event.target.getBoundingClientRect().x !== 8 &&
           dragActive
         ) {
-          let correctBin = items[currentItem].bin;
-          attempted++;
-          lastSuccess = correctBin === binName;
-          if (lastSuccess) {
-            itemErr.innerHTML = "Great Job!";
-            // TODO: itemErr.innerHTML=items[currentItem].success;
-            closeAllBins();
-            setNextItem();
-            resetItemPosition();
-            score++;
-          } else {
-            itemErr.innerHTML = items[currentItem].error;
-          }
-          displayScore();
+          checkSuccess(binName);
         }
         dragActive = false;
       }
+
+      function checkSuccess(binName) {
+        let correctBin = items[currentItem].bin;
+        attempted++;
+        lastSuccess = correctBin === binName;
+        if (lastSuccess) {
+          //if correct bin
+          setEmotion("happy");
+          itemErr.innerHTML = "Great Job!";
+          // TODO: itemErr.innerHTML=items[currentItem].success;
+          canDrag = false;
+          score++;
+          animationStartTime = Date.now();
+          window.requestAnimationFrame(animateHappy);
+
+          setTimeout(() => {
+            closeAllBins();
+            setNextItem();
+            resetItemPosition();
+            canDrag = true;
+          }, 2000);
+        } else {
+          setEmotion("sad");
+          itemErr.innerHTML = items[currentItem].error;
+        }
+        displayScore();
+      }
+
+      function animateHappy() {
+        let currentTime = Date.now();
+        let increase = Math.PI / 120;
+        animationPos += increase;
+        let pos = Math.sin(animationPos) * 300;
+        let currentPos = getTranslation(itemImg);
+        console.log("I'm happy", currentY, animationPos, pos, currentPos);
+        itemImg.style.transform = `translate3d(${currentPos[0]}px,${
+          currentPos[1] + pos
+        }px,${currentPos[2]}px)`;
+        if (currentTime < animationStartTime + 2000) {
+          window.requestAnimationFrame(animateHappy);
+        }
+      }
+
+      function animateSad() {}
 
       function handleBinMouseEnter(event) {
         if (dragActive) {
