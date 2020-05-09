@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+–<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -279,9 +279,10 @@
           let str = element.style.transform;
           return str
             .replace("translate3d(", "")
-            .replace("px", "")
+            .replace(/px/g, "")
             .replace(")", "")
-            .split(", ");
+            .split(", ")
+            .map((s) => +s);
         }
       }
 
@@ -321,10 +322,8 @@
           // check if game is over
           currentItem = inPlay[0];
           displayItem(items[currentItem], currentItem);
-          console.log("continue playing");
         } else {
           modal.style.display = "block";
-          console.log("end game");
         }
       }
 
@@ -421,14 +420,14 @@
         let correctBin = items[currentItem].bin;
         attempted++;
         lastSuccess = correctBin === binName;
+        animationStartTime = Date.now();
+        canDrag = false;
         if (lastSuccess) {
           //if correct bin
           setEmotion("happy");
           itemErr.innerHTML = "Great Job!";
           // TODO: itemErr.innerHTML=items[currentItem].success;
-          canDrag = false;
           score++;
-          animationStartTime = Date.now();
           window.requestAnimationFrame(animateHappy);
 
           setTimeout(() => {
@@ -436,30 +435,46 @@
             setNextItem();
             resetItemPosition();
             canDrag = true;
-          }, 2000);
+          }, 1500);
         } else {
           setEmotion("sad");
           itemErr.innerHTML = items[currentItem].error;
+          closeAllBins();
+          window.requestAnimationFrame(animateSad);
+
+          setTimeout(() => {
+            canDrag = true;
+            setEmotion();
+          }, 1500);
         }
         displayScore();
       }
 
       function animateHappy() {
+        let jumpHeight = 7;
+        let jumpSpeed = 60;
         let currentTime = Date.now();
-        let increase = Math.PI / 120;
-        animationPos += increase;
-        let pos = Math.sin(animationPos) * 300;
+        animationPos = currentTime - animationStartTime;
+        let pos = Math.cos(animationPos / jumpSpeed) * jumpHeight;
         let currentPos = getTranslation(itemImg);
-        console.log("I'm happy", currentY, animationPos, pos, currentPos);
-        itemImg.style.transform = `translate3d(${currentPos[0]}px,${
-          currentPos[1] + pos
-        }px,${currentPos[2]}px)`;
-        if (currentTime < animationStartTime + 2000) {
+        setItemTranslate(currentPos[0], currentPos[1] + pos);
+        if (currentTime < animationStartTime + 1500) {
           window.requestAnimationFrame(animateHappy);
         }
       }
 
-      function animateSad() {}
+      function animateSad() {
+        let jumpHeight = 7;
+        let jumpSpeed = 60;
+        let currentTime = Date.now();
+        animationPos = currentTime - animationStartTime;
+        let pos = Math.cos(animationPos / jumpSpeed) * jumpHeight;
+        let currentPos = getTranslation(itemImg);
+        setItemTranslate(currentPos[0] + pos, currentPos[1]);
+        if (currentTime < animationStartTime + 1500) {
+          window.requestAnimationFrame(animateSad);
+        }
+      }
 
       function handleBinMouseEnter(event) {
         if (dragActive) {
