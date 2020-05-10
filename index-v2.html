@@ -22,6 +22,7 @@
         height: 300px;
         width: 150px;
         background-size: contain;
+        background-repeat: no-repeat;
       }
 
       .trash {
@@ -41,8 +42,10 @@
         width: 100px;
         touch-action: none;
         user-select: none;
-        cursor: pointer;
+        cursor: grab;
         background-color: transparent;
+        background-size: cover;
+        background-repeat: no-repeat;
       }
 
       .score,
@@ -118,7 +121,7 @@
         apple: {
           bin: "compost",
           error: defaultErr,
-          image: "images/apple2.png",
+          image: "images/Apple_artboardsTest_apple.svg",
         },
         "paper-plate": {
           bin: "recycle",
@@ -237,6 +240,7 @@
 
       // Helper Functions
       function setEmotion(emotion) {
+        //TODO get .item width from css for multiplication
         switch (emotion) {
           case "surprised":
             itemImg.style.backgroundPositionX = "-100px";
@@ -368,6 +372,7 @@
         if (event.target.classList.contains("item") && canDrag) {
           //check if you're clicking an item AND if you may drag things
           setEmotion("surprised");
+          itemImg.style.cursor = "grabbing";
           dragActive = true;
         }
       }
@@ -399,6 +404,7 @@
       }
 
       function handleDragEnd(event) {
+        itemImg.style.cursor = "grab";
         if (canDrag) setEmotion();
 
         initialX = currentX;
