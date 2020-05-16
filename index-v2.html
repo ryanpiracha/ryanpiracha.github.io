@@ -20,21 +20,21 @@
 
       .bin {
         height: 300px;
-        width: 150px;
+        width: 130px;
         background-size: contain;
         background-repeat: no-repeat;
       }
 
       .trash {
-        background-image: url("./images/bins/trashClosed.png");
+        background-image: url("./images/bins/trashClosed.svg");
       }
 
       .recycle {
-        background-image: url("./images/bins/recycleClosed.png");
+        background-image: url("./images/bins/recycleClosed.svg");
       }
 
       .compost {
-        background-image: url("./images/bins/compostClosed.png");
+        background-image: url("./images/bins/compostClosed.svg");
       }
 
       .item {
@@ -102,9 +102,9 @@
     <script>
       // preload images
       let preloadedImages = [
-        "./images/bins/trashOpen.png",
-        "./images/bins/recycleOpen.png",
-        "./images/bins/compostOpen.png",
+        "./images/bins/trashOpen.svg",
+        "./images/bins/recycleOpen.svg",
+        "./images/bins/compostOpen.svg",
       ];
       let preloaded = [];
       for (let i = 0; i < preloadedImages.length; i++) {
@@ -121,96 +121,38 @@
         apple: {
           bin: "compost",
           error: defaultErr,
-          image: "images/Apple_artboardsTest_apple.svg",
         },
-        "paper-plate": {
-          bin: "recycle",
+        veggies: {
+          bin: "compost",
           error: "Oops, try again",
-          image: "images/paperplate.png",
         },
         cardboard: {
           bin: "recycle",
           error:
             "Clean cardboard can be composted, but it is better to recycle it",
-          image: "images/cardboardicon.png",
         },
-        bones: {
+        "fats-and-oils": {
           bin: "trash",
           error: defaultErr,
-          image: "images/bone.png",
         },
-        meat: {
-          bin: "trash",
+        "aluminum-cans": {
+          bin: "recycle",
           error: "oops try again",
-          image: "images/meaticon.png",
-        },
-        fish: {
-          bin: "trash",
-          error: defaultErr,
-          image: "images/fishicon.png",
-        },
-        "dairy-products": {
-          bin: "trash",
-          error: defaultErr,
-          image: "images/dairyicon.png",
-        },
-        "fat-oil-and-grease": {
-          bin: "trash",
-          error: defaultErr,
-          image: "images/oilicon.png",
-        },
-        bread: {
-          bin: "compost",
-          error: "Oops, try again",
-          image: "images/breadicon.png",
-        },
-        "glossy-paper": {
-          bin: "trash",
-          error: "Oops, try again",
-          image: "images/magazineicon.png",
-        },
-        "pizza-box": {
-          bin: "compost",
-          error: "Oops, try again",
-          image: "images/pizzaicon.png",
-        },
-        pasta: {
-          bin: "compost",
-          error: "Oops, try again",
-          image: "images/pastaicon.png",
         },
         eggshells: {
           bin: "compost",
           error: defaultErr,
-          image: "images/eggshells.png",
         },
-        styrofoam: {
-          bin: "trash",
+        "tea-leaves": {
+          bin: "compost",
           error: defaultErr,
-          image: "images/eggshells.png",
-        },
-        "plastic-bottles": {
-          bin: "recycle",
-          error: defaultErr,
-          image: "images/eggshells.png",
-        },
-        "glass-bottles": {
-          bin: "recycle",
-          error: defaultErr,
-          image: "images/eggshells.png",
-        },
-        "aluminum-cans": {
-          bin: "recycle",
-          error: defaultErr,
-          image: "images/eggshells.png",
         },
       };
 
       // DOING STUFF
 
       // Setup current item
-      //let inPlay = shuffle(Object.keys(items));
-      let inPlay = Object.keys(items);
+      let inPlay = shuffle(Object.keys(items));
       let score = 0;
       let attempted = 0;
       let lastSuccess = false;
@@ -308,7 +250,10 @@
       }
 
       function displayItem(itemConfig, itemName) {
-        itemImg.style.backgroundImage = `url('${itemConfig.image}')`;
+        //itemImg.style.backgroundImage = `url('${itemConfig.image}')`;
+        console.log(itemName);
+        console.log("");
+        itemImg.style.backgroundImage = `url("images/${itemName}.svg")`; //TODO: why does this one NOT need .images, but the bins below does?
         itemDes.innerHTML = toTitleCase(itemName);
       }
 
@@ -396,7 +341,7 @@
           );
           if (binName && event.target.getBoundingClientRect().x !== 8) {
             const overlappingBin = document.querySelectorAll(`.${binName}`)[0];
-            overlappingBin.style.backgroundImage = `url("./images/bins/${binName}Open.png")`;
+            overlappingBin.style.backgroundImage = `url("./images/bins/${binName}Open.svg")`;
           } else {
             closeAllBins();
           }
@@ -486,7 +431,7 @@
         if (dragActive) {
           let element = event.target;
           let binName = element.classList.toString().replace("bin", "").trim();
-          element.style.backgroundImage = `url("./images/bins/${binName}Open.png")`;
+          element.style.backgroundImage = `url("./images/bins/${binName}Open.svg")`;
         }
       }
 
