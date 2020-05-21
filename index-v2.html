@@ -13,7 +13,7 @@
 
       .bins {
         display: flex;
-        justify-content: space-around;
+        justify-content: space-around; /* TODO: space bins closer together*/
         width: 100%;
         margin-top: 100px;
       }
@@ -97,6 +97,8 @@
       <p>ok good job, but can you do it again? I dare you.</p>
       <p id="final-score"></p>
       <button onclick="startOver()" class="button">Start Over</button>
+      <button class="button">More Info</button>
+      <button class="button">Download Infographic</button>
     </div>
 
     <script>
@@ -126,12 +128,20 @@
           bin: "compost",
           error: "Oops, try again",
         },
+        coffee: {
+          bin: "compost",
+          error: "Oops, try again",
+        },
         cardboard: {
           bin: "recycle",
           error:
             "Clean cardboard can be composted, but it is better to recycle it",
         },
         "fats-and-oils": {
+          bin: "trash",
+          error: defaultErr,
+        },
+        bones: {
           bin: "trash",
           error: defaultErr,
         },
@@ -147,22 +157,34 @@
           bin: "compost",
           error: defaultErr,
         },
+        newspaper: {
+          bin: "recycle",
+          error: defaultErr,
+        },
+        "paper-towel": {
+          bin: "trash",
+          error: defaultErr,
+        },
       };
 
       // DOING STUFF
 
       // Setup current item
       let inPlay = shuffle(Object.keys(items));
-      let score = 0;
-      let attempted = 0;
       let lastSuccess = false;
       let itemImg = document.querySelectorAll(".item")[0];
       let game = document.querySelectorAll(".game")[0];
       let itemDes = document.querySelectorAll(".description")[0];
       let itemErr = document.querySelectorAll(".errorMsg")[0];
+      let modal = document.querySelector("#win-modal");
+
+      //score variables
+      let score = 0;
+      let attempted = 0;
       let scoreEl = document.querySelectorAll(".score")[0];
       let attemptedEl = document.querySelectorAll(".attempted")[0];
-      let modal = document.querySelector("#win-modal");
+      let totalItems = inPlay.length;
+      let onItem = 1;
 
       // Draging variables
       let dragActive = false;
@@ -174,6 +196,7 @@
       let animationStartTime;
       let animating = false;
       let animationPos = 0;
+      let animationDuration = 1000;
 
       // GAME LOOP START
       let currentItem = inPlay[0];
@@ -200,7 +223,7 @@
       }
 
       function isOverlapping(rect1, rect2) {
-        let padding = 10; //TODO: fuck with padding
+        let padding = 10; //TODO: fuck with hitbox padding
         return !(
           rect1.right < rect2.left ||
           rect1.left > rect2.right ||
@@ -244,6 +267,8 @@
         inPlay = shuffle(Object.keys(items));
         score = 0;
         attempted = 0;
+        onItem = 1;
+        displayScore();
         currentItem = inPlay[0];
         displayItem(items[currentItem], currentItem);
         modal.style.display = "none";
@@ -270,6 +295,8 @@
         if (inPlay.length > 0) {
           // check if game is over
           currentItem = inPlay[0];
+          onItem++;
+          displayScore();
           displayItem(items[currentItem], currentItem);
         } else {
           modal.style.display = "block";
@@ -277,8 +304,14 @@
       }
 
       function displayScore() {
-        scoreEl.innerHTML = `Score: ${score}`;
-        attemptedEl.innerHTML = `Attempts: ${attempted}`;
+        //TODO: weird line is appearing above score
+        if (attempted == 0) {
+          scoreEl.innerHTML = `Score:`;
+        } else {
+          //prettier-ignore
+          scoreEl.innerHTML = `Current Score: ${Math.round((score * 100) / attempted)}%`;
+        }
+        attemptedEl.innerHTML = `On item ${onItem} of ${totalItems}`; // TODO: Make language more elegant
       }
 
       function toTitleCase(str) {
@@ -386,7 +419,7 @@
             setNextItem();
             resetItemPosition();
             canDrag = true;
-          }, 1500);
+          }, animationDuration);
         } else {
           setEmotion("sad");
           itemErr.innerHTML = items[currentItem].error;
@@ -396,7 +429,7 @@
           setTimeout(() => {
             canDrag = true;
             setEmotion();
-          }, 1500);
+          }, animationDuration);
         }
         displayScore();
       }
@@ -409,7 +442,7 @@
         let pos = Math.cos(animationPos / jumpSpeed) * jumpHeight;
         let currentPos = getTranslation(itemImg);
         setItemTranslate(currentPos[0], currentPos[1] + pos);
-        if (currentTime < animationStartTime + 1500) {
+        if (currentTime < animationStartTime + animationDuration) {
           window.requestAnimationFrame(animateHappy);
         }
       }
@@ -422,7 +455,7 @@
         let pos = Math.cos(animationPos / jumpSpeed) * jumpHeight;
         let currentPos = getTranslation(itemImg);
         setItemTranslate(currentPos[0] + pos, currentPos[1]);
-        if (currentTime < animationStartTime + 1500) {
+        if (currentTime < animationStartTime + animationDuration) {
           window.requestAnimationFrame(animateSad);
         }
       }
