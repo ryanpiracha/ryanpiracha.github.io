@@ -15,7 +15,7 @@
         display: flex;
         justify-content: space-around; /* TODO: space bins closer together*/
         width: 100%;
-        margin-top: 100px;
+        margin-top: 0px;
       }
 
       .bin {
@@ -141,30 +141,30 @@
           bin: "trash",
           error: defaultErr,
         },
-        bones: {
-          bin: "trash",
-          error: defaultErr,
-        },
-        "aluminum-cans": {
-          bin: "recycle",
-          error: "oops try again",
-        },
-        eggshells: {
-          bin: "compost",
-          error: defaultErr,
-        },
-        "tea-leaves": {
-          bin: "compost",
-          error: defaultErr,
-        },
-        newspaper: {
-          bin: "recycle",
-          error: defaultErr,
-        },
-        "paper-towel": {
-          bin: "trash",
-          error: defaultErr,
-        },
+        // bones: {
+        //   bin: "trash",
+        //   error: defaultErr,
+        // },
+        // "aluminum-cans": {
+        //   bin: "recycle",
+        //   error: "oops try again",
+        // },
+        // eggshells: {
+        //   bin: "compost",
+        //   error: defaultErr,
+        // },
+        // "tea-leaves": {
+        //   bin: "compost",
+        //   error: defaultErr,
+        // },
+        // newspaper: {
+        //   bin: "recycle",
+        //   error: defaultErr,
+        // },
+        // "paper-towel": {
+        //   bin: "trash",
+        //   error: defaultErr,
+        // },
       };
 
       // DOING STUFF
@@ -177,10 +177,12 @@
       let itemDes = document.querySelectorAll(".description")[0];
       let itemErr = document.querySelectorAll(".errorMsg")[0];
       let modal = document.querySelector("#win-modal");
+      let displayFinalScore = document.querySelector("#final-score");
 
       //score variables
       let score = 0;
       let attempted = 0;
+      let calculatedScore = 100;
       let scoreEl = document.querySelectorAll(".score")[0];
       let attemptedEl = document.querySelectorAll(".attempted")[0];
       let totalItems = inPlay.length;
@@ -299,17 +301,26 @@
           displayScore();
           displayItem(items[currentItem], currentItem);
         } else {
+          if (calculatedScore == 100)
+            displayFinalScore.innerHTML = `Your final score was ${calculatedScore}% You're an Eco-warrior! Keep up the good work!`;
+          else if (calculatedScore > 80)
+            displayFinalScore.innerHTML = `Your final score was ${calculatedScore}% Great Job! Keep at it, and make sure to double check before you toss something!`;
+          else if (calculatedScore > 40)
+            displayFinalScore.innerHTML = `Your final score was ${calculatedScore}% Not bad. You may want to play again or click more info to sharpen those skills.`;
+          else
+            displayFinalScore.innerHTML = `Your final score was ${calculatedScore}% You absolute piece of shit. I hope you enjoy the collapse of human civilization and the extinction of life on earth.`;
           modal.style.display = "block";
         }
       }
 
       function displayScore() {
+        calculatedScore = Math.round((score * 100) / attempted);
         //TODO: weird line is appearing above score
         if (attempted == 0) {
           scoreEl.innerHTML = `Score:`;
         } else {
           //prettier-ignore
-          scoreEl.innerHTML = `Current Score: ${Math.round((score * 100) / attempted)}%`;
+          scoreEl.innerHTML = `Current Score: ${calculatedScore}%`;
         }
         attemptedEl.innerHTML = `On item ${onItem} of ${totalItems}`; // TODO: Make language more elegant
       }
