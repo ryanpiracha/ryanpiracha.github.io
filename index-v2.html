@@ -65,6 +65,14 @@
         background-color: white;
       }
 
+      #moreInfo-modal {
+        position: fixed;
+        top: 10vh;
+        left: 35%;
+        display: none;
+        background-color: white;
+      }
+
       .show-modal {
         display: block;
       }
@@ -80,6 +88,7 @@
     <div class="game">
       <div class="score"></div>
       <div class="attempted"></div>
+      <button onclick="displayMoreInfo()" class="button">More Info</button>
 
       <p class="description"></p>
       <div class="item"></div>
@@ -97,8 +106,50 @@
       <p>ok good job, but can you do it again? I dare you.</p>
       <p id="final-score"></p>
       <button onclick="startOver()" class="button">Start Over</button>
-      <button class="button">More Info</button>
+      <button onclick="displayMoreInfo()" class="button">More Info</button>
       <button class="button">Download Infographic</button>
+    </div>
+
+    <div id="moreInfo-modal">
+      <h1>More Info:</h1>
+      <p></p>
+
+      <h2>Recycling:</h2>
+      <p>
+        <ul>
+          <li>Items must be clean to be recycled.</li>
+          <li>Not all facilities accept the same items into recycling. Make sure to check the guidelines by your local waste treatment facility.</li>
+          <li>Many recyclable items, such as batteries and grocery bags, aren’t accepted by curbside pickup but can be accepted by specialty recycling locations.</li>
+        </ul>
+      </p>
+
+      <h2>Composting:</h2>
+      <p>
+        <ul>
+          <li>Consider if the item is contaminated by a non-compostable material. For example, a clean paper towel can be composted, but if the paper towel was used on oils or cleaning chemicals, it should be thrown out.
+          </li>
+          <li>Consider the material that an item is made from. For example, a cotton tea bag may be fully compostable, but a synthetic tea bag will not be.</li>
+        <li>Not all compost piles can break down the same materials. If you are sending compost to a large-scale compost facility, be sure to check what items they accept.</li>
+        <li>Backyard compost piles are generally more limited, since they do not get as hot and are generally more susceptible to pests.</li>
+        </ul>
+      </p>
+
+      <p>
+        If you’re still not sure which bin to put any item, the best thing to do
+        may be to throw it away. This helps avoid contaminating a recycling or
+        compost bin.</p>
+        
+      <p>
+        Remember that the first steps in making a difference are
+        refuse, reduce, and reuse. Creating less waste in the first place is
+        better than proper composting and recycling.</p>
+        
+      <h3>Credits:</h3>
+        <p> Ryan Piracha - Director, Illustrator, Developer </p>
+        <p>Andrew Hinton - Lead Developer</p>
+
+      <button onclick="displayMoreInfo()" class="button">Close</button>
+      
     </div>
 
     <script>
@@ -126,11 +177,11 @@
         },
         veggies: {
           bin: "compost",
-          error: "Oops, try again",
+          error: defaultErr,
         },
         coffee: {
           bin: "compost",
-          error: "Oops, try again",
+          error: defaultErr,
         },
         cardboard: {
           bin: "recycle",
@@ -147,7 +198,15 @@
         },
         "aluminum-cans": {
           bin: "recycle",
-          error: "oops try again",
+          error: defaultErr,
+        },
+        "plastic-bottles": {
+          bin: "recycle",
+          error: defaultErr,
+        },
+        styrofoam: {
+          bin: "trash",
+          error: defaultErr,
         },
         eggshells: {
           bin: "compost",
@@ -176,7 +235,8 @@
       let game = document.querySelectorAll(".game")[0];
       let itemDes = document.querySelectorAll(".description")[0];
       let itemErr = document.querySelectorAll(".errorMsg")[0];
-      let modal = document.querySelector("#win-modal");
+      let winModal = document.querySelector("#win-modal");
+      let moreInfoModal = document.querySelector("#moreInfo-modal");
       let displayFinalScore = document.querySelector("#final-score");
 
       //score variables
@@ -273,7 +333,7 @@
         displayScore();
         currentItem = inPlay[0];
         displayItem(items[currentItem], currentItem);
-        modal.style.display = "none";
+        winModal.style.display = "none";
       }
 
       function displayItem(itemConfig, itemName) {
@@ -309,7 +369,7 @@
             displayFinalScore.innerHTML = `Your final score was ${calculatedScore}% Not bad. You may want to play again or click more info to sharpen those skills.`;
           else
             displayFinalScore.innerHTML = `Your final score was ${calculatedScore}% You absolute piece of shit. I hope you enjoy the collapse of human civilization and the extinction of life on earth.`;
-          modal.style.display = "block";
+          winModal.style.display = "block";
         }
       }
 
@@ -347,6 +407,18 @@
       function setItemTranslate(x, y) {
         itemImg.style.transform = `translate3d(${x}px, ${y}px, 0)`;
       }
+
+      function displayMoreInfo(){
+        if(moreInfoModal.style.display=="none")
+        moreInfoModal.style.display = "block";
+        else
+        moreInfoModal.style.display = "none";
+        //moreInfoModal.style.display = "block";
+      }
+
+      // function closeMoreInfo(){
+      //   moreInfoModal.style.display = "none";
+      // }
 
       // Event Handlers
       function handleDragStart(event) {
