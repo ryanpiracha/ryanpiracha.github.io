@@ -1,4 +1,4 @@
-–<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -9,13 +9,14 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        height: 100vh;
       }
 
       .bins {
         display: flex;
-        justify-content: space-around; /* TODO: space bins closer together*/
+        justify-content: center;
         width: 100%;
-        margin-top: 0px;
+        margin-top: 100px;
       }
 
       .bin {
@@ -23,6 +24,16 @@
         width: 130px;
         background-size: contain;
         background-repeat: no-repeat;
+      }
+
+      .bin:nth-child(2) {
+        margin: 0 150px;
+      }
+
+      @media only screen and (max-width: 700px) {
+        .bin:nth-child(2) {
+          margin: 0 50px;
+        }
       }
 
       .trash {
@@ -66,15 +77,16 @@
       }
 
       #moreInfo-modal {
+        top: 0;
         position: fixed;
-        top: 10vh;
-        left: 35%;
         display: none;
         background-color: white;
       }
 
-      .show-modal {
+      #speech {
         display: block;
+        position: absolute;
+        bottom: 50px;
       }
 
       .button {
@@ -93,7 +105,9 @@
       <p class="description"></p>
       <div class="item"></div>
 
-      <p class="errorMsg"></p>
+      <div id="speech">
+        <p>This is a placeholder</p>
+      </div>
 
       <div class="bins">
         <div class="bin trash"></div>
@@ -112,44 +126,62 @@
 
     <div id="moreInfo-modal">
       <h1>More Info:</h1>
-      <p></p>
 
       <h2>Recycling:</h2>
-      <p>
-        <ul>
-          <li>Items must be clean to be recycled.</li>
-          <li>Not all facilities accept the same items into recycling. Make sure to check the guidelines by your local waste treatment facility.</li>
-          <li>Many recyclable items, such as batteries and grocery bags, aren’t accepted by curbside pickup but can be accepted by specialty recycling locations.</li>
-        </ul>
-      </p>
+
+      <ul>
+        <li>Items must be clean to be recycled.</li>
+        <li>
+          Not all facilities accept the same items into recycling. Make sure to
+          check the guidelines by your local waste treatment facility.
+        </li>
+        <li>
+          Many recyclable items, such as batteries and grocery bags, aren’t
+          accepted by curbside pickup but can be accepted by specialty recycling
+          locations.
+        </li>
+      </ul>
 
       <h2>Composting:</h2>
-      <p>
-        <ul>
-          <li>Consider if the item is contaminated by a non-compostable material. For example, a clean paper towel can be composted, but if the paper towel was used on oils or cleaning chemicals, it should be thrown out.
-          </li>
-          <li>Consider the material that an item is made from. For example, a cotton tea bag may be fully compostable, but a synthetic tea bag will not be.</li>
-        <li>Not all compost piles can break down the same materials. If you are sending compost to a large-scale compost facility, be sure to check what items they accept.</li>
-        <li>Backyard compost piles are generally more limited, since they do not get as hot and are generally more susceptible to pests.</li>
-        </ul>
-      </p>
+
+      <ul>
+        <li>
+          Consider if the item is contaminated by a non-compostable material.
+          For example, a clean paper towel can be composted, but if the paper
+          towel was used on oils or cleaning chemicals, it should be thrown out.
+        </li>
+        <li>
+          Consider the material that an item is made from. For example, a cotton
+          tea bag may be fully compostable, but a synthetic tea bag will not be.
+        </li>
+        <li>
+          Not all compost piles can break down the same materials. If you are
+          sending compost to a large-scale compost facility, be sure to check
+          what items they accept.
+        </li>
+        <li>
+          Backyard compost piles are generally more limited, since they do not
+          get as hot and are generally more susceptible to pests.
+        </li>
+      </ul>
 
       <p>
         If you’re still not sure which bin to put any item, the best thing to do
         may be to throw it away. This helps avoid contaminating a recycling or
-        compost bin.</p>
-        
+        compost bin.
+      </p>
+
       <p>
-        Remember that the first steps in making a difference are
-        refuse, reduce, and reuse. Creating less waste in the first place is
-        better than proper composting and recycling.</p>
-        
+        Remember that the first steps in making a difference are refuse, reduce,
+        and reuse. Creating less waste in the first place is better than proper
+        composting and recycling.
+      </p>
+
       <h3>Credits:</h3>
-        <p> Ryan Piracha - Director, Illustrator, Developer </p>
-        <p>Andrew Hinton - Lead Developer</p>
+      <p>Ryan Piracha - Director, Illustrator, Developer</p>
+      <p>Andrew Hinton - Developer</p>
 
       <button onclick="displayMoreInfo()" class="button">Close</button>
-      
     </div>
 
     <script>
@@ -234,7 +266,7 @@
       let itemImg = document.querySelectorAll(".item")[0];
       let game = document.querySelectorAll(".game")[0];
       let itemDes = document.querySelectorAll(".description")[0];
-      let itemErr = document.querySelectorAll(".errorMsg")[0];
+      let itemErr = document.querySelector("#speech");
       let winModal = document.querySelector("#win-modal");
       let moreInfoModal = document.querySelector("#moreInfo-modal");
       let displayFinalScore = document.querySelector("#final-score");
@@ -337,10 +369,7 @@
       }
 
       function displayItem(itemConfig, itemName) {
-        //itemImg.style.backgroundImage = `url('${itemConfig.image}')`;
-        console.log(itemName);
-        console.log("");
-        itemImg.style.backgroundImage = `url("images/${itemName}.svg")`; //TODO: why does this one NOT need .images, but the bins below does?
+        itemImg.style.backgroundImage = `url("./images/${itemName}.svg")`;
         itemDes.innerHTML = toTitleCase(itemName);
       }
 
@@ -350,7 +379,6 @@
       }
 
       function setNextItem() {
-        console.log(inPlay);
         let finishedItem = inPlay.shift();
         setEmotion();
 
@@ -408,17 +436,11 @@
         itemImg.style.transform = `translate3d(${x}px, ${y}px, 0)`;
       }
 
-      function displayMoreInfo(){
-        if(moreInfoModal.style.display=="none")
-        moreInfoModal.style.display = "block";
-        else
-        moreInfoModal.style.display = "none";
-        //moreInfoModal.style.display = "block";
+      function displayMoreInfo() {
+        if (moreInfoModal.style.display == "none")
+          moreInfoModal.style.display = "block";
+        else moreInfoModal.style.display = "none";
       }
-
-      // function closeMoreInfo(){
-      //   moreInfoModal.style.display = "none";
-      // }
 
       // Event Handlers
       function handleDragStart(event) {
@@ -452,10 +474,10 @@
           offsetY = currentY;
           setItemTranslate(currentX, currentY);
 
-          const binName = getOverlappingBin(
-            event.target.getBoundingClientRect()
-          );
-          if (binName && event.target.getBoundingClientRect().x !== 8) {
+          const binName = getOverlappingBin(itemImg.getBoundingClientRect());
+          const testItemHeight = itemImg.getBoundingClientRect().height;
+
+          if (binName) {
             const overlappingBin = document.querySelectorAll(`.${binName}`)[0];
             overlappingBin.style.backgroundImage = `url("./images/bins/${binName}Open.svg")`;
           } else {
@@ -492,7 +514,7 @@
         if (lastSuccess) {
           //if correct bin
           setEmotion("happy");
-          itemErr.innerHTML = "Great Job!";
+          itemErr.innerHTML = "Hooray!";
           // TODO: itemErr.innerHTML=items[currentItem].success;
           score++;
           window.requestAnimationFrame(animateHappy);
