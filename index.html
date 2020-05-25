@@ -271,7 +271,6 @@
         lastSuccess = event.target.classList.contains(correctBin);
         if (lastSuccess) {
           itemErr.innerHTML = "Hooray!";
-          // TODO: itemErr.innerHTML=items[currentItem].success;
           score++;
         } else {
           itemErr.innerHTML = items[currentItem].error;

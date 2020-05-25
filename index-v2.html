@@ -5,11 +5,96 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Compost Game</title>
     <style>
+      :root {
+        --color1: #e6ffe8;
+        --color2: #a1daaf;
+        --color3: #84bd8b;
+        --color4: #396d52;
+        --color5: #0b3823;
+      }
+      @font-face {
+        font-family: vodka;
+        src: url("./fonts/TheSoulOfVodka.ttf");
+      }
+      @font-face {
+        font-family: font2;
+        src: url("./fonts/GeoSansLight.ttf");
+      }
+
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+      }
+
+      h1,
+      h2 {
+        font-family: vodka;
+        text-transform: uppercase;
+        color: var(--color4);
+      }
+      h1 {
+        color: var(--color5);
+      }
+      h3 {
+        margin: 0;
+      }
+      p,
+      ul {
+        font-family: font2;
+        font-size: 20px;
+      }
       .game {
         display: flex;
         flex-direction: column;
         align-items: center;
-        height: 100vh;
+        /* height: 100vh; */
+        max-height: 100vh;
+        padding: 50px;
+        background-image: linear-gradient(#ffffff 25%, #d5e4d5);
+      }
+
+      .topBar {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+      }
+      .descriptionBubble {
+        border-radius: 8px;
+        border: 2px solid var(--color4);
+        padding: 10px 18px 0;
+        background-color: var(--color2);
+        display: flex;
+        place-items: center;
+      }
+      .description {
+        font-size: 24px;
+        font-family: vodka, Impact, Haettenschweiler, "Arial Narrow Bold", serif;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin: 0;
+        color: var(--color5);
+        vertical-align: sub;
+      }
+
+      .item {
+        --itemSize: 100px;
+        height: var(--itemSize);
+        width: var(--itemSize);
+        touch-action: none;
+        user-select: none;
+        cursor: grab;
+        background-color: transparent;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+
+      .instructions {
+        display: block;
+        font-family: font2;
+        color: var(--color4);
+        position: absolute;
+        top: 260px;
       }
 
       .bins {
@@ -30,12 +115,6 @@
         margin: 0 150px;
       }
 
-      @media only screen and (max-width: 700px) {
-        .bin:nth-child(2) {
-          margin: 0 50px;
-        }
-      }
-
       .trash {
         background-image: url("./images/bins/trashClosed.svg");
       }
@@ -48,20 +127,25 @@
         background-image: url("./images/bins/compostClosed.svg");
       }
 
-      .item {
-        height: 100px;
-        width: 100px;
-        touch-action: none;
-        user-select: none;
-        cursor: grab;
-        background-color: transparent;
-        background-size: cover;
-        background-repeat: no-repeat;
+      .score-elements {
+        background-color: var(--color2);
+        padding: 12px 8px 8px;
+        border: 2px solid var(--color4);
+        border-radius: 8px;
+        width: 142px;
       }
 
-      .score,
+      .score {
+        font-family: vodka;
+        text-transform: uppercase;
+        font-size: 20px;
+      }
+
       .attempted {
-        align-self: flex-start;
+        font-family: font2;
+        letter-spacing: 0.05em;
+        font-size: 12px;
+        color: var(--color4);
       }
 
       .errorMsg {
@@ -73,37 +157,125 @@
         top: 10vh;
         left: 35%;
         display: none;
-        background-color: white;
+
+        /* styling */
+        font-family: font2;
+        padding: 16px;
+        border: 2px solid var(--color4);
+        border-radius: 8px;
+        left: 50%;
+        transform: translate(-50%, 0);
+        background-color: var(--color1);
       }
 
       #moreInfo-modal {
-        top: 0;
-        position: fixed;
+        top: 20px;
+        position: absolute;
+        margin: auto;
         display: none;
-        background-color: white;
+        padding: 16px;
+        border: 2px solid var(--color4);
+        border-radius: 8px;
+        width: 60%;
+        left: 50%;
+        transform: translate(-50%, 0);
+        background-color: var(--color1);
+      }
+
+      .closeButton {
+        position: absolute;
+        top: 20px;
+        right: 20px;
       }
 
       #speech {
-        display: block;
+        /* positioning */
+        display: none;
         position: absolute;
-        bottom: 50px;
+        top: 40px;
+
+        /* styling */
+        border-radius: 9999px;
+        border: 2px solid var(--color4);
+        padding: 6px 18px;
+        max-width: 250px;
+        text-align: center;
+        background-color: var(--color1);
+        font-family: font2;
+        font-size: 20px;
+        color: var(--color5);
       }
 
       .button {
-        background-color: yellow;
-        padding: 10px;
+        background-color: var(--color3);
+        padding: 10px 10px 4px;
+        font-family: vodka;
+        text-transform: uppercase;
+        font-size: 18px;
+        border-radius: 8px;
+        border: 2px solid var(--color4);
+
+        margin: 0;
+      }
+
+      button:hover {
+        color: var(--color1);
+        /* border-color: var(--color1); */
+        /* box-shadow: 0px 2px 0px 0 var(--color4);
+        transform: translateY(-2px); */
+      }
+
+      button:focus {
+        outline: 0;
+      }
+
+      .credits {
+        margin: 0;
+        color: var(--color4);
+        font-size: 16px;
+      }
+
+      a {
+        text-decoration: none;
+        color: var(--color4);
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      @media only screen and (max-width: 700px) {
+        .bin:nth-child(2) {
+          margin: 0 50px;
+        }
+        #moreInfo-modal {
+          width: 90%;
+        }
       }
     </style>
   </head>
 
   <body>
     <div class="game">
-      <div class="score"></div>
-      <div class="attempted"></div>
-      <button onclick="displayMoreInfo()" class="button">More Info</button>
+      <div class="topBar">
+        <div class="score-elements">
+          <div class="score"></div>
+          <div class="attempted"></div>
+        </div>
 
-      <p class="description"></p>
+        <div>
+          <button onclick="displayModal('#moreInfo-modal')" class="button">
+            More Info
+          </button>
+          <button class="button">Download Infographic</button>
+        </div>
+      </div>
+      <div class="descriptionBubble">
+        <p class="description"></p>
+      </div>
       <div class="item"></div>
+
+      <div class="instructions">Drag me to the correct bin!</div>
 
       <div id="speech">
         <p>This is a placeholder</p>
@@ -119,13 +291,29 @@
     <div id="win-modal">
       <p>ok good job, but can you do it again? I dare you.</p>
       <p id="final-score"></p>
-      <button onclick="startOver()" class="button">Start Over</button>
-      <button onclick="displayMoreInfo()" class="button">More Info</button>
-      <button class="button">Download Infographic</button>
+      <button onclick="startOver()" class="button startButton">
+        Start Over
+      </button>
+      <!-- <button onclick="displayModal('#moreInfo-modal')" class="button">
+        More Info
+      </button>
+      <button class="button">Download Infographic</button> -->
     </div>
 
     <div id="moreInfo-modal">
+      <button
+        onclick="closeModal('#moreInfo-modal')"
+        class="button closeButton"
+      >
+        Close
+      </button>
       <h1>More Info:</h1>
+
+      <p>
+        This game is a basic guide to sorting your waste. But keep in mind,
+        there can be a lot of variation based on condition, locality, or other
+        factors.
+      </p>
 
       <h2>Recycling:</h2>
 
@@ -177,11 +365,13 @@
         composting and recycling.
       </p>
 
-      <h3>Credits:</h3>
-      <p>Ryan Piracha - Director, Illustrator, Developer</p>
-      <p>Andrew Hinton - Developer</p>
-
-      <button onclick="displayMoreInfo()" class="button">Close</button>
+      <!-- <h3>Credits:</h3> -->
+      <p class="credits">
+        Credits: <br />
+        <a href="https://ryanpiracha.com">Ryan Piracha</a> - Director,
+        Illustrator, Developer <br />
+        Andrew Hinton - Developer
+      </p>
     </div>
 
     <script>
@@ -207,55 +397,54 @@
           bin: "compost",
           error: defaultErr,
         },
-        veggies: {
-          bin: "compost",
-          error: defaultErr,
-        },
-        coffee: {
-          bin: "compost",
-          error: defaultErr,
-        },
-        cardboard: {
-          bin: "recycle",
-          error:
-            "Clean cardboard can be composted, but it is better to recycle it",
-        },
-        "fats-and-oils": {
-          bin: "trash",
-          error: defaultErr,
-        },
-        bones: {
-          bin: "trash",
-          error: defaultErr,
-        },
-        "aluminum-cans": {
-          bin: "recycle",
-          error: defaultErr,
-        },
-        "plastic-bottles": {
-          bin: "recycle",
-          error: defaultErr,
-        },
-        styrofoam: {
-          bin: "trash",
-          error: defaultErr,
-        },
-        eggshells: {
-          bin: "compost",
-          error: defaultErr,
-        },
-        "tea-leaves": {
-          bin: "compost",
-          error: defaultErr,
-        },
-        newspaper: {
-          bin: "recycle",
-          error: defaultErr,
-        },
-        "paper-towel": {
-          bin: "trash",
-          error: defaultErr,
-        },
+        // veggies: {
+        //   bin: "compost",
+        //   error: defaultErr,
+        // },
+        // coffee: {
+        //   bin: "compost",
+        //   error: defaultErr,
+        // },
+        // cardboard: {
+        //   bin: "recycle",
+        //   error: "Compost is okay, but I like the recycling better.",
+        // },
+        // "fats-and-oils": {
+        //   bin: "trash",
+        //   error: defaultErr,
+        // },
+        // bones: {
+        //   bin: "trash",
+        //   error: defaultErr,
+        // },
+        // "aluminum-cans": {
+        //   bin: "recycle",
+        //   error: defaultErr,
+        // },
+        // "plastic-bottles": {
+        //   bin: "recycle",
+        //   error: defaultErr,
+        // },
+        // styrofoam: {
+        //   bin: "trash",
+        //   error: defaultErr,
+        // },
+        // eggshells: {
+        //   bin: "compost",
+        //   error: defaultErr,
+        // },
+        // "tea-leaves": {
+        //   bin: "compost",
+        //   error: defaultErr,
+        // },
+        // newspaper: {
+        //   bin: "recycle",
+        //   error: defaultErr,
+        // },
+        // "paper-towel": {
+        //   bin: "trash",
+        //   error: defaultErr,
+        // },
       };
 
       // DOING STUFF
@@ -266,10 +455,10 @@
       let itemImg = document.querySelectorAll(".item")[0];
       let game = document.querySelectorAll(".game")[0];
       let itemDes = document.querySelectorAll(".description")[0];
-      let itemErr = document.querySelector("#speech");
-      let winModal = document.querySelector("#win-modal");
-      let moreInfoModal = document.querySelector("#moreInfo-modal");
+      let speechElement = document.querySelector("#speech");
+
       let displayFinalScore = document.querySelector("#final-score");
+      let instructions = document.querySelectorAll(".instructions")[0];
 
       //score variables
       let score = 0;
@@ -290,7 +479,7 @@
       let animationStartTime;
       let animating = false;
       let animationPos = 0;
-      let animationDuration = 1000;
+      let animationDuration = 750;
 
       // GAME LOOP START
       let currentItem = inPlay[0];
@@ -299,16 +488,16 @@
 
       // Helper Functions
       function setEmotion(emotion) {
-        //TODO get .item width from css for multiplication
+        const itemWidth = parseInt(getComputedStyle(itemImg).width, 10);
         switch (emotion) {
           case "surprised":
-            itemImg.style.backgroundPositionX = "-100px";
+            itemImg.style.backgroundPositionX = `${itemWidth * -1}px`;
             break;
           case "happy":
-            itemImg.style.backgroundPositionX = "-200px";
+            itemImg.style.backgroundPositionX = `${itemWidth * -2}px`;
             break;
           case "sad":
-            itemImg.style.backgroundPositionX = "-300px";
+            itemImg.style.backgroundPositionX = `${itemWidth * -3}px`;
             break;
           default:
             itemImg.style.backgroundPositionX = "0px";
@@ -365,7 +554,8 @@
         displayScore();
         currentItem = inPlay[0];
         displayItem(items[currentItem], currentItem);
-        winModal.style.display = "none";
+        closeModal("#win-modal");
+        displayModal(".instructions");
       }
 
       function displayItem(itemConfig, itemName) {
@@ -381,6 +571,7 @@
       function setNextItem() {
         let finishedItem = inPlay.shift();
         setEmotion();
+        closeModal("#speech");
 
         if (inPlay.length > 0) {
           // check if game is over
@@ -397,20 +588,19 @@
             displayFinalScore.innerHTML = `Your final score was ${calculatedScore}% Not bad. You may want to play again or click more info to sharpen those skills.`;
           else
             displayFinalScore.innerHTML = `Your final score was ${calculatedScore}% You absolute piece of shit. I hope you enjoy the collapse of human civilization and the extinction of life on earth.`;
-          winModal.style.display = "block";
+          displayModal("#win-modal");
         }
       }
 
       function displayScore() {
         calculatedScore = Math.round((score * 100) / attempted);
-        //TODO: weird line is appearing above score
         if (attempted == 0) {
-          scoreEl.innerHTML = `Score:`;
+          scoreEl.innerHTML = `Current Score:`;
         } else {
           //prettier-ignore
           scoreEl.innerHTML = `Current Score: ${calculatedScore}%`;
         }
-        attemptedEl.innerHTML = `On item ${onItem} of ${totalItems}`; // TODO: Make language more elegant
+        attemptedEl.innerHTML = `#${onItem} of ${totalItems}`;
       }
 
       function toTitleCase(str) {
@@ -436,15 +626,24 @@
         itemImg.style.transform = `translate3d(${x}px, ${y}px, 0)`;
       }
 
-      function displayMoreInfo() {
-        if (moreInfoModal.style.display == "none")
-          moreInfoModal.style.display = "block";
-        else moreInfoModal.style.display = "none";
+      function setSpeechTranslate() {
+        const coord = getTranslation(itemImg);
+        speechElement.style.transform = `translate3d(${coord[0]}px, ${coord[1]}px, 0)`;
+      }
+
+      function displayModal(elementId) {
+        const modalElement = document.querySelector(elementId);
+        modalElement.style.display = "block";
+      }
+      function closeModal(elementId) {
+        const modalElement = document.querySelector(elementId);
+        modalElement.style.display = "none";
       }
 
       // Event Handlers
       function handleDragStart(event) {
-        itemErr.innerHTML = "";
+        closeModal("#speech");
+        speechElement.innerHTML = "";
         if (event.type === "touchstart") {
           initialX = event.touches[0].clientX - offsetX;
           initialY = event.touches[0].clientY - offsetY;
@@ -457,6 +656,7 @@
           setEmotion("surprised");
           itemImg.style.cursor = "grabbing";
           dragActive = true;
+          closeModal(".instructions");
         }
       }
 
@@ -514,8 +714,7 @@
         if (lastSuccess) {
           //if correct bin
           setEmotion("happy");
-          itemErr.innerHTML = "Hooray!";
-          // TODO: itemErr.innerHTML=items[currentItem].success;
+          speechElement.innerHTML = "Hooray!";
           score++;
           window.requestAnimationFrame(animateHappy);
 
@@ -527,7 +726,7 @@
           }, animationDuration);
         } else {
           setEmotion("sad");
-          itemErr.innerHTML = items[currentItem].error;
+          speechElement.innerHTML = items[currentItem].error;
           closeAllBins();
           window.requestAnimationFrame(animateSad);
 
@@ -536,6 +735,8 @@
             setEmotion();
           }, animationDuration);
         }
+        setSpeechTranslate();
+        displayModal("#speech");
         displayScore();
       }
 
