@@ -9,8 +9,8 @@
         --color1: #e6ffe8;
         --color2: #a1daaf;
         --color3: #84bd8b;
-        --color4: #396d52;
-        --color5: #0b3823;
+        --color4: #1e6b43;
+        --color5: #002c11;
       }
       @font-face {
         font-family: vodka;
@@ -26,12 +26,22 @@
         padding: 0;
         margin: 0;
       }
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        background-image: url("./images/Background.svg");
+        background-size: cover;
+        background-position: center bottom;
+      }
 
       h1,
       h2 {
         font-family: vodka;
         text-transform: uppercase;
         color: var(--color4);
+        letter-spacing: 0.05em;
       }
       h1 {
         color: var(--color5);
@@ -48,10 +58,10 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        /* height: 100vh; */
-        max-height: 100vh;
+        height: 100vh;
         padding: 50px;
-        background-image: linear-gradient(#ffffff 25%, #d5e4d5);
+        min-height: 600px;
+        min-width: 700px;
       }
 
       .topBar {
@@ -87,6 +97,7 @@
         background-color: transparent;
         background-size: cover;
         background-repeat: no-repeat;
+        z-index: 1;
       }
 
       .instructions {
@@ -98,10 +109,13 @@
       }
 
       .bins {
+        /* TODO: set minimum position-y */
         display: flex;
         justify-content: center;
         width: 100%;
-        margin-top: 100px;
+        position: absolute;
+        bottom: 15%;
+        background-color: transparent;
       }
 
       .bin {
@@ -128,24 +142,26 @@
       }
 
       .score-elements {
-        background-color: var(--color2);
+        /* background-color: var(--color2);
         padding: 12px 8px 8px;
         border: 2px solid var(--color4);
         border-radius: 8px;
-        width: 142px;
+        width: 142px; */
       }
 
       .score {
         font-family: vodka;
         text-transform: uppercase;
-        font-size: 20px;
+        letter-spacing: 0.03em;
+        font-size: 22px;
+        color: var(--color4);
       }
 
       .attempted {
         font-family: font2;
         letter-spacing: 0.05em;
-        font-size: 12px;
-        color: var(--color4);
+        font-size: 15px;
+        color: var(--color3);
       }
 
       .errorMsg {
@@ -157,6 +173,7 @@
         top: 10vh;
         left: 35%;
         display: none;
+        z-index: 1;
 
         /* styling */
         font-family: font2;
@@ -169,6 +186,7 @@
       }
 
       #moreInfo-modal {
+        /* TODO: add inner scroll bar */
         top: 20px;
         position: absolute;
         margin: auto;
@@ -176,10 +194,11 @@
         padding: 16px;
         border: 2px solid var(--color4);
         border-radius: 8px;
-        width: 60%;
+        width: 80%;
         left: 50%;
         transform: translate(-50%, 0);
         background-color: var(--color1);
+        z-index: 1;
       }
 
       .closeButton {
@@ -204,6 +223,33 @@
         font-family: font2;
         font-size: 20px;
         color: var(--color5);
+        /* background-image: url("./images/speechTag.svg");
+        background-repeat: no-repeat;
+        background-position-x: 70%;
+        background-position-y: 20px;
+        */
+      }
+
+      /* TODO: make speech triangle better */
+
+      #speech:before,
+      #speech:after {
+        content: " ";
+        position: absolute;
+        width: 0;
+        height: 0;
+      }
+      #speech:before {
+        left: 60%;
+        bottom: -24px;
+        border: 12px solid;
+        border-color: var(--color4) transparent transparent var(--color4);
+      }
+      #speech:after {
+        left: 61.5%;
+        bottom: -18px;
+        border: 10px solid;
+        border-color: var(--color1) transparent transparent var(--color1);
       }
 
       .button {
@@ -211,10 +257,10 @@
         padding: 10px 10px 4px;
         font-family: vodka;
         text-transform: uppercase;
-        font-size: 18px;
+        font-size: 14px;
         border-radius: 8px;
         border: 2px solid var(--color4);
-
+        letter-spacing: 0.05em;
         margin: 0;
       }
 
@@ -279,12 +325,14 @@
 
       <div id="speech">
         <p>This is a placeholder</p>
+        <div id="tag"></div>
       </div>
 
       <div class="bins">
         <div class="bin trash"></div>
         <div class="bin recycle"></div>
         <div class="bin compost"></div>
+        <!-- TODO: add shadows -->
       </div>
     </div>
 
@@ -368,8 +416,8 @@
       <!-- <h3>Credits:</h3> -->
       <p class="credits">
         Credits: <br />
-        <a href="https://ryanpiracha.com">Ryan Piracha</a> - Director,
-        Illustrator, Developer <br />
+        <a href="https://ryanpiracha.com" target="_blank">Ryan Piracha</a> -
+        Director, Illustrator, Developer <br />
         Andrew Hinton - Developer
       </p>
     </div>
@@ -397,54 +445,54 @@
           bin: "compost",
           error: defaultErr,
         },
-        // veggies: {
-        //   bin: "compost",
-        //   error: defaultErr,
-        // },
-        // coffee: {
-        //   bin: "compost",
-        //   error: defaultErr,
-        // },
-        // cardboard: {
-        //   bin: "recycle",
-        //   error: "Compost is okay, but I like the recycling better.",
-        // },
-        // "fats-and-oils": {
-        //   bin: "trash",
-        //   error: defaultErr,
-        // },
-        // bones: {
-        //   bin: "trash",
-        //   error: defaultErr,
-        // },
-        // "aluminum-cans": {
-        //   bin: "recycle",
-        //   error: defaultErr,
-        // },
-        // "plastic-bottles": {
-        //   bin: "recycle",
-        //   error: defaultErr,
-        // },
-        // styrofoam: {
-        //   bin: "trash",
-        //   error: defaultErr,
-        // },
-        // eggshells: {
-        //   bin: "compost",
-        //   error: defaultErr,
-        // },
-        // "tea-leaves": {
-        //   bin: "compost",
-        //   error: defaultErr,
-        // },
-        // newspaper: {
-        //   bin: "recycle",
-        //   error: defaultErr,
-        // },
-        // "paper-towel": {
-        //   bin: "trash",
-        //   error: defaultErr,
-        // },
+        veggies: {
+          bin: "compost",
+          error: defaultErr,
+        },
+        coffee: {
+          bin: "compost",
+          error: defaultErr,
+        },
+        cardboard: {
+          bin: "recycle",
+          error: "Compost is okay, but I like the recycling better.",
+        },
+        "fats-and-oils": {
+          bin: "trash",
+          error: defaultErr,
+        },
+        bones: {
+          bin: "trash",
+          error: defaultErr,
+        },
+        "aluminum-cans": {
+          bin: "recycle",
+          error: defaultErr,
+        },
+        "plastic-bottles": {
+          bin: "recycle",
+          error: defaultErr,
+        },
+        styrofoam: {
+          bin: "trash",
+          error: defaultErr,
+        },
+        eggshells: {
+          bin: "compost",
+          error: defaultErr,
+        },
+        "tea-leaves": {
+          bin: "compost",
+          error: defaultErr,
+        },
+        newspaper: {
+          bin: "recycle",
+          error: defaultErr,
+        },
+        "paper-towel": {
+          bin: "trash",
+          error: defaultErr,
+        },
       };
 
       // DOING STUFF
@@ -506,7 +554,6 @@
       }
 
       function isOverlapping(rect1, rect2) {
-        let padding = 10; //TODO: fuck with hitbox padding
         return !(
           rect1.right < rect2.left ||
           rect1.left > rect2.right ||
