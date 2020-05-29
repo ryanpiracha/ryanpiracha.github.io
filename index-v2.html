@@ -145,7 +145,7 @@
         background-size: contain;
         position: relative;
         top: 48px;
-        left: 114px;
+        left: 113px;
         overflow: hidden;
       }
 
@@ -247,12 +247,14 @@
       }
 
       #speech {
-        /* positioning */
         display: none;
         position: absolute;
-        top: 40px;
+        top: 60px;
+      }
 
-        /* styling */
+      #speechText {
+        margin: 0;
+
         border-radius: 9999px;
         border: 2px solid var(--color4);
         padding: 6px 18px;
@@ -262,33 +264,15 @@
         font-family: font2;
         font-size: 20px;
         color: var(--color5);
-        /* background-image: url("./images/speechTag.svg");
-        background-repeat: no-repeat;
-        background-position-x: 70%;
-        background-position-y: 20px;
-        */
       }
 
-      /* TODO: make speech triangle better */
-
-      #speech:before,
-      #speech:after {
-        content: " ";
-        position: absolute;
-        width: 0;
-        height: 0;
-      }
-      #speech:before {
-        left: 60%;
-        bottom: -24px;
-        border: 12px solid;
-        border-color: var(--color4) transparent transparent var(--color4);
-      }
-      #speech:after {
-        left: 61.5%;
-        bottom: -18px;
-        border: 10px solid;
-        border-color: var(--color1) transparent transparent var(--color1);
+      #tag {
+        background-image: url("./images/speechTag.svg");
+        position: relative;
+        width: 30px;
+        height: 30px;
+        left: 56%;
+        top: -2px;
       }
 
       .button {
@@ -366,7 +350,7 @@
       <div class="instructions">Drag me to the correct bin!</div>
 
       <div id="speech">
-        <p>This is a placeholder</p>
+        <p id="speechText">This is a placeholder</p>
         <div id="tag"></div>
       </div>
 
@@ -551,6 +535,7 @@
       let game = document.querySelectorAll(".game")[0];
       let itemDes = document.querySelectorAll(".description")[0];
       let speechElement = document.querySelector("#speech");
+      let speechText = document.querySelector("#speechText");
 
       let displayFinalScore = document.querySelector("#final-score");
       let instructions = document.querySelectorAll(".instructions")[0];
@@ -737,7 +722,6 @@
       // Event Handlers
       function handleDragStart(event) {
         closeModal("#speech");
-        speechElement.innerHTML = "";
         if (event.type === "touchstart") {
           initialX = event.touches[0].clientX - offsetX;
           initialY = event.touches[0].clientY - offsetY;
@@ -808,7 +792,7 @@
         if (lastSuccess) {
           //if correct bin
           setEmotion("happy");
-          speechElement.innerHTML = "Hooray!";
+          speechText.innerHTML = "Hooray!";
           score++;
           window.requestAnimationFrame(animateHappy);
 
@@ -820,7 +804,7 @@
           }, animationDuration);
         } else {
           setEmotion("sad");
-          speechElement.innerHTML = items[currentItem].error;
+          speechText.innerHTML = items[currentItem].error;
           closeAllBins();
           window.requestAnimationFrame(animateSad);
 
