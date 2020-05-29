@@ -25,6 +25,7 @@
       body {
         padding: 0;
         margin: 0;
+        overflow: hidden;
       }
       * {
         box-sizing: border-box;
@@ -76,6 +77,7 @@
         background-color: var(--color2);
         display: flex;
         place-items: center;
+        margin-bottom: 24px;
       }
       .description {
         font-size: 24px;
@@ -97,7 +99,7 @@
         background-color: transparent;
         background-size: cover;
         background-repeat: no-repeat;
-        z-index: 1;
+        z-index: 2;
       }
 
       .instructions {
@@ -105,16 +107,17 @@
         font-family: font2;
         color: var(--color4);
         position: absolute;
-        top: 260px;
+        top: 280px;
       }
 
-      .bins {
+      .bins,
+      .binShadows {
         /* TODO: set minimum position-y */
         display: flex;
         justify-content: center;
         width: 100%;
         position: absolute;
-        bottom: 15%;
+        bottom: 18%;
         background-color: transparent;
       }
 
@@ -123,10 +126,31 @@
         width: 130px;
         background-size: contain;
         background-repeat: no-repeat;
+        z-index: 1;
       }
 
       .bin:nth-child(2) {
         margin: 0 150px;
+      }
+
+      .shadow {
+        width: 333px;
+        height: 55px;
+        min-width: 333px;
+        min-height: 55px;
+        background-image: url("./images/shadow.svg");
+        background-repeat: no-repeat;
+        background-color: transparent;
+        background-blend-mode: multiply;
+        background-size: contain;
+        position: relative;
+        top: 48px;
+        left: 114px;
+        overflow: hidden;
+      }
+
+      .shadow:nth-child(2) {
+        margin: 0 -53px;
       }
 
       .trash {
@@ -173,7 +197,7 @@
         top: 10vh;
         left: 35%;
         display: none;
-        z-index: 1;
+        z-index: 2;
 
         /* styling */
         font-family: font2;
@@ -186,19 +210,34 @@
       }
 
       #moreInfo-modal {
-        /* TODO: add inner scroll bar */
-        top: 20px;
+        /* TODO: close when click outside */
+        top: 5%;
         position: absolute;
         margin: auto;
         display: none;
         padding: 16px;
         border: 2px solid var(--color4);
         border-radius: 8px;
+        max-height: 90%;
         width: 80%;
+        overflow-y: scroll;
         left: 50%;
         transform: translate(-50%, 0);
         background-color: var(--color1);
-        z-index: 1;
+        z-index: 2;
+      }
+
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-thumb {
+        border-radius: 8px;
+        background-color: var(--color2);
+      }
+
+      ::-webkit-scrollbar-track {
+        background-color: var(--color1);
+        border-radius: 8px;
       }
 
       .closeButton {
@@ -294,6 +333,9 @@
         .bin:nth-child(2) {
           margin: 0 50px;
         }
+        .shadow:nth-child(2) {
+          margin: 0 -154px;
+        }
         #moreInfo-modal {
           width: 90%;
         }
@@ -332,7 +374,12 @@
         <div class="bin trash"></div>
         <div class="bin recycle"></div>
         <div class="bin compost"></div>
-        <!-- TODO: add shadows -->
+      </div>
+
+      <div class="binShadows">
+        <div class="shadow"></div>
+        <div class="shadow"></div>
+        <div class="shadow"></div>
       </div>
     </div>
 
