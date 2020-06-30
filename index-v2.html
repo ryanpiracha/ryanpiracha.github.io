@@ -5,9 +5,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Compost Game</title>
     <style>
+      html,
+      body,
+      div,
+      span,
+      applet,
+      object,
+      iframe,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      blockquote,
+      pre,
+      a,
+      abbr,
+      acronym,
+      address,
+      big,
+      cite,
+      code,
+      del,
+      dfn,
+      em,
+      img,
+      ins,
+      kbd,
+      q,
+      s,
+      samp,
+      small,
+      strike,
+      strong,
+      sub,
+      sup,
+      tt,
+      var,
+      b,
+      u,
+      i,
+      center,
+      dl,
+      dt,
+      dd,
+      ol,
+      ul,
+      li,
+      fieldset,
+      form,
+      label,
+      legend,
+      table,
+      caption,
+      tbody,
+      tfoot,
+      thead,
+      tr,
+      th,
+      td,
+      article,
+      aside,
+      canvas,
+      details,
+      embed,
+      figure,
+      figcaption,
+      footer,
+      header,
+      hgroup,
+      menu,
+      nav,
+      output,
+      ruby,
+      section,
+      summary,
+      time,
+      mark,
+      audio,
+      video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+      }
       :root {
         --color1: #e6ffe8;
-        --color2: #a1daaf;
+        --color2: #83c293;
         --color3: #84bd8b;
         --color4: #1e6b43;
         --color5: #002c11;
@@ -41,8 +129,10 @@
       h2 {
         font-family: vodka;
         text-transform: uppercase;
+        font-size: 26px;
         color: var(--color4);
-        letter-spacing: 0.05em;
+        letter-spacing: 0.08em;
+        margin: 36px 0 12px 0;
       }
       h1 {
         color: var(--color5);
@@ -53,7 +143,19 @@
       p,
       ul {
         font-family: font2;
-        font-size: 20px;
+        font-size: 24px;
+        padding: 8px 0 0 30px;
+      }
+      .outer-list > li {
+        list-style-type: none;
+        background-color: var(--color2);
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 8px;
+        border: solid #222 1px;
+      }
+
+      li {
       }
       .game {
         display: flex;
@@ -83,10 +185,11 @@
         font-size: 24px;
         font-family: vodka, Impact, Haettenschweiler, "Arial Narrow Bold", serif;
         text-transform: uppercase;
-        letter-spacing: 0.05em;
+        letter-spacing: 0.08em;
         margin: 0;
         color: var(--color5);
         vertical-align: sub;
+        padding: 0;
       }
 
       .item {
@@ -176,14 +279,14 @@
       .score {
         font-family: vodka;
         text-transform: uppercase;
-        letter-spacing: 0.03em;
+        letter-spacing: 0.08em;
         font-size: 22px;
         color: var(--color4);
       }
 
       .attempted {
         font-family: font2;
-        letter-spacing: 0.05em;
+        letter-spacing: 0.08em;
         font-size: 15px;
         color: var(--color3);
       }
@@ -215,7 +318,7 @@
         position: absolute;
         margin: auto;
         display: none;
-        padding: 16px;
+        padding: 40px;
         border: 2px solid var(--color4);
         border-radius: 8px;
         max-height: 90%;
@@ -250,6 +353,7 @@
         display: none;
         position: absolute;
         top: 60px;
+        z-index: 2;
       }
 
       #speechText {
@@ -283,12 +387,13 @@
         font-size: 14px;
         border-radius: 8px;
         border: 2px solid var(--color4);
-        letter-spacing: 0.05em;
+        letter-spacing: 0.08em;
         margin: 0;
       }
 
       button:hover {
         color: var(--color1);
+        cursor: pointer;
         /* border-color: var(--color1); */
         /* box-shadow: 0px 2px 0px 0 var(--color4);
         transform: translateY(-2px); */
@@ -298,7 +403,8 @@
         outline: 0;
       }
 
-      .credits {
+      .credits,
+      .resources {
         margin: 0;
         color: var(--color4);
         font-size: 16px;
@@ -368,7 +474,7 @@
     </div>
 
     <div id="win-modal">
-      <p>ok good job, but can you do it again? I dare you.</p>
+      <p>You did it!</p>
       <p id="final-score"></p>
       <button onclick="startOver()" class="button startButton">
         Start Over
@@ -389,60 +495,100 @@
       <h1>More Info:</h1>
 
       <p>
-        This game is a basic guide to sorting your waste. But keep in mind,
-        there can be a lot of variation based on condition, locality, or other
-        factors.
+        This game is a basic guide to sorting your waste. But lots of factors
+        can affect where an item should go.
       </p>
 
       <h2>Recycling:</h2>
 
-      <ul>
-        <li>Items must be clean to be recycled.</li>
+      <ul class="outer-list">
         <li>
-          Not all facilities accept the same items into recycling. Make sure to
-          check the guidelines by your local waste treatment facility.
+          Clean your items before recycling. One dirty item can spoil an entire
+          bin. If it can't be cleaned, throw it away.
         </li>
         <li>
-          Many recyclable items, such as batteries and grocery bags, aren’t
-          accepted by curbside pickup but can be accepted by specialty recycling
-          locations.
+          Check the guidelines by your local waste treatment facility to see
+          which items they accept. Not all facilites can accept the same things.
+        </li>
+        <li>
+          Some items that aren't accepted by curbside pickup can still be
+          recycled at special facilities. Look up local drop-off locations for
+          things like batteries and plastic grocery bags.
         </li>
       </ul>
 
       <h2>Composting:</h2>
 
-      <ul>
+      <ul class="outer-list">
         <li>
-          Consider if the item is contaminated by a non-compostable material.
-          For example, a clean paper towel can be composted, but if the paper
-          towel was used on oils or cleaning chemicals, it should be thrown out.
+          All parts of an item must be compostable for it to be composted.
+          Veggies mixed with meat or paper towel used with cleaning chemicals
+          should be thrown away.
         </li>
         <li>
-          Consider the material that an item is made from. For example, a cotton
-          tea bag may be fully compostable, but a synthetic tea bag will not be.
+          Check whether an item is made of natural or synthetic materials. Cork,
+          for example, is compostable, but some wine bottles use synthetic
+          corks. Tea bags are also sometimes compostable, but not always.
         </li>
         <li>
-          Not all compost piles can break down the same materials. If you are
-          sending compost to a large-scale compost facility, be sure to check
-          what items they accept.
-        </li>
-        <li>
-          Backyard compost piles are generally more limited, since they do not
-          get as hot and are generally more susceptible to pests.
+          Backyard compost bins or heaps will differ from municipial compost
+          facilites in two key ways:
+          <ul class="inner-list">
+            <li>
+              Municipal heaps get much hotter. This means they can break down
+              more items such as meat and compostable plastics.
+            </li>
+            <li>
+              Backyard heaps are more susceptible to pests. Bread and rice are a
+              bad idea in a backyard heap, but can usually be accepted by
+              drop-off services.
+            </li>
+            <li>
+              Always check the guidelines off your drop-off service to see what
+              they accept.
+            </li>
+          </ul>
         </li>
       </ul>
 
       <p>
-        If you’re still not sure which bin to put any item, the best thing to do
-        may be to throw it away. This helps avoid contaminating a recycling or
-        compost bin.
+        This small game can't cover everything. Below are some links to learn
+        more. I am not affilliated with these sites, but I found them helpful in
+        making this game and living a greener life.
       </p>
 
       <p>
         Remember that the first steps in making a difference are refuse, reduce,
-        and reuse. Creating less waste in the first place is better than proper
-        composting and recycling.
+        and reuse. Proper waste sorting is important, but it is far better to
+        create less waste in the first place.
       </p>
+      <h2>More resources: <br /></h2>
+      <ul>
+        <li>
+          <a href="https://www.compostthis.co.uk/"
+            >A more detailed composting guide</a
+          >
+        </li>
+        <li>
+          <a href="https://search.earth911.com/"
+            >Find special recycling drop-offs near you</a
+          >
+        </li>
+        <li>
+          <a href="https://recyclingsimplified.com/recycling-basics/"
+            >Beginner's Guide to Recycling</a
+          >
+        </li>
+        <li>
+          <a href="https://recork.com/corkwatch/">Is your wine cork natural?</a>
+        </li>
+        <li>
+          <a
+            href="https://www.lesswasteworld.com/blog-1/2018/5/17/does-your-tea-bag-compost-a-brand-comparison"
+            >Is your tea bag compostable?</a
+          >
+        </li>
+      </ul>
 
       <!-- <h3>Credits:</h3> -->
       <p class="credits">
@@ -472,7 +618,11 @@
       // Declare Data
       let defaultErr = "I don't like it in there!";
       const items = {
-        apple: {
+        fruits: {
+          bin: "compost",
+          error: defaultErr,
+        },
+        citrus: {
           bin: "compost",
           error: defaultErr,
         },
@@ -484,11 +634,27 @@
           bin: "compost",
           error: defaultErr,
         },
+        bread: {
+          bin: "compost",
+          error: defaultErr,
+        },
         cardboard: {
           bin: "recycle",
           error: "Compost is okay, but I like the recycling better.",
         },
         "fats-and-oils": {
+          bin: "trash",
+          error: defaultErr,
+        },
+        dairy: {
+          bin: "trash",
+          error: "We don't like it in there!",
+        },
+        eggs: {
+          bin: "trash",
+          error: defaultErr,
+        },
+        meat: {
           bin: "trash",
           error: defaultErr,
         },
@@ -500,7 +666,15 @@
           bin: "recycle",
           error: defaultErr,
         },
+        "paper-cartons": {
+          bin: "recycle",
+          error: defaultErr,
+        },
         "plastic-bottles": {
+          bin: "recycle",
+          error: defaultErr,
+        },
+        "glass-bottles": {
           bin: "recycle",
           error: defaultErr,
         },
@@ -520,8 +694,28 @@
           bin: "recycle",
           error: defaultErr,
         },
+        napkins: {
+          bin: "trash",
+          error: "I'm icky, I can't go there!",
+        },
         "paper-towel": {
           bin: "trash",
+          error: defaultErr,
+        },
+        "paper-plates": {
+          bin: "trash",
+          error: "I'm coated in wax. I can't go there!",
+        },
+        "plastic-utensils": {
+          bin: "trash",
+          error: "I'm too small for recycle centers to sort!",
+        },
+        receipts: {
+          bin: "trash",
+          error: "I'm coated in plastic. I can't go in there!",
+        },
+        "glossy-paper": {
+          bin: "recycle",
           error: defaultErr,
         },
       };
@@ -659,14 +853,11 @@
           displayScore();
           displayItem(items[currentItem], currentItem);
         } else {
-          if (calculatedScore == 100)
-            displayFinalScore.innerHTML = `Your final score was ${calculatedScore}% You're an Eco-warrior! Keep up the good work!`;
-          else if (calculatedScore > 80)
-            displayFinalScore.innerHTML = `Your final score was ${calculatedScore}% Great Job! Keep at it, and make sure to double check before you toss something!`;
-          else if (calculatedScore > 40)
-            displayFinalScore.innerHTML = `Your final score was ${calculatedScore}% Not bad. You may want to play again or click more info to sharpen those skills.`;
+          if (calculatedScore > 85)
+            displayFinalScore.innerHTML = `Your final score was ${calculatedScore}%! Keep up the good work!`;
           else
-            displayFinalScore.innerHTML = `Your final score was ${calculatedScore}% You absolute piece of shit. I hope you enjoy the collapse of human civilization and the extinction of life on earth.`;
+            displayFinalScore.innerHTML = `Your final score was ${calculatedScore}%! Play again or click the More Info button to learn more.`;
+
           displayModal("#win-modal");
         }
       }
