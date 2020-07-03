@@ -3,42 +3,317 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Learn ta compost ya dingus</title>
+    <title>Compost Game</title>
     <style>
+      html,
+      body,
+      div,
+      span,
+      applet,
+      object,
+      iframe,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      blockquote,
+      pre,
+      a,
+      abbr,
+      acronym,
+      address,
+      big,
+      cite,
+      code,
+      del,
+      dfn,
+      em,
+      img,
+      ins,
+      kbd,
+      q,
+      s,
+      samp,
+      small,
+      strike,
+      strong,
+      sub,
+      sup,
+      tt,
+      var,
+      b,
+      u,
+      i,
+      center,
+      dl,
+      dt,
+      dd,
+      ol,
+      ul,
+      li,
+      fieldset,
+      form,
+      label,
+      legend,
+      table,
+      caption,
+      tbody,
+      tfoot,
+      thead,
+      tr,
+      th,
+      td,
+      article,
+      aside,
+      canvas,
+      details,
+      embed,
+      figure,
+      figcaption,
+      footer,
+      header,
+      hgroup,
+      menu,
+      nav,
+      output,
+      ruby,
+      section,
+      summary,
+      time,
+      mark,
+      audio,
+      video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+      }
+      :root {
+        --color1: #ddfdea;
+        --color2: #83c293;
+        --color3: #84bd8b;
+        --color4: #1e6b43;
+        --color5: #002c11;
+        --blueCol: #2267cf;
+        --greenCol: #1f9943;
+        --purpleCol: #5f22cf;
+        --orangeCol: #f3ac29;
+        --redCol: #ec4b4b;
+      }
+      @font-face {
+        font-family: vodka;
+        /* src: url("./fonts/TheSoulOfVodka.ttf"); */
+        src: url("./fonts/Bebas-Regular.ttf");
+      }
+      @font-face {
+        font-family: font2;
+        src: url("./fonts/GeoSansLight.ttf");
+      }
+
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+      }
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        background-image: url("./images/Background.svg");
+        background-size: cover;
+        background-position: center bottom;
+      }
+
+      h1 {
+        font-family: vodka;
+        text-transform: uppercase;
+        font-size: 26px;
+        color: var(--orangeCol);
+        letter-spacing: 0.08em;
+        /* margin: 36px 0 12px 0; */
+      }
+      h2 {
+        font-family: vodka;
+        text-transform: uppercase;
+        font-size: 26px;
+        color: var(--orangeCol);
+        letter-spacing: 0.08em;
+        /* margin: 36px 0 12px 0; */
+      }
+
+      .section {
+        margin: 12px 0 36px 0;
+      }
+      .blueText {
+        color: var(--blueCol);
+      }
+      .greenText {
+        color: var(--greenCol);
+      }
+      h3 {
+        margin: 0;
+        font-family: vodka;
+        text-transform: uppercase;
+        font-size: 20px;
+        color: var(--orangeCol);
+        letter-spacing: 0.08em;
+      }
+      p,
+      ul {
+        font-family: font2;
+        font-size: 24px;
+        padding-left: 30px;
+      }
+      p {
+        padding: 16px 0 0 46px;
+      }
+      .outer-list > li {
+        list-style-type: none;
+      }
+
+      li {
+        padding: 16px;
+        margin-bottom: 8px;
+      }
+
+      .bulletList {
+        padding: 16px 100px;
+      }
+      .bulletList > li {
+        margin-bottom: 2px;
+        padding: 4px;
+      }
       .game {
         display: flex;
         flex-direction: column;
         align-items: center;
+        height: 100vh;
+        padding: 50px;
+        min-height: 600px;
+        min-width: 700px;
       }
 
-      .bins {
+      .topBar {
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
         width: 100%;
-        margin-top: 100px;
+      }
+      .descriptionBubble {
+        border-radius: 8px;
+        border: 2px solid var(--orangeCol);
+        padding: 10px;
+        background-color: rgba(255, 255, 255, 0.5);
+        display: flex;
+        place-items: center;
+        margin-bottom: 24px;
+      }
+      .description {
+        font-size: 24px;
+        font-family: vodka, Impact, Haettenschweiler, "Arial Narrow Bold", serif;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin: 0;
+        color: var(--orangeCol);
+        vertical-align: sub;
+        padding: 0;
+      }
+
+      .item {
+        --itemSize: 110px;
+        height: var(--itemSize);
+        width: var(--itemSize);
+        touch-action: none;
+        user-select: none;
+        cursor: grab;
+        background-color: transparent;
+        background-size: cover;
+        background-repeat: no-repeat;
+        z-index: 2;
+      }
+
+      .instructions {
+        display: block;
+        font-family: font2;
+        color: var(--greenCol);
+        position: absolute;
+        top: 300px;
+      }
+
+      .bins,
+      .binShadows {
+        /* TODO: set minimum position-y */
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        position: absolute;
+        bottom: 18%;
+        background-color: transparent;
       }
 
       .bin {
         height: 300px;
-        width: 150px;
-        background-color: aquamarine;
-      }
-
-      .item {
-        height: 100px;
-        width: 100px;
-        background-color: red;
+        width: 130px;
         background-size: contain;
         background-repeat: no-repeat;
+        z-index: 1;
       }
 
-      .score,
+      .bin:nth-child(2) {
+        margin: 0 150px;
+      }
+
+      .shadow {
+        width: 333px;
+        height: 55px;
+        min-width: 333px;
+        min-height: 55px;
+        background-image: url("./images/shadow.svg");
+        background-repeat: no-repeat;
+        background-color: transparent;
+        background-blend-mode: multiply;
+        background-size: contain;
+        position: relative;
+        top: 48px;
+        left: 113px;
+        overflow: hidden;
+      }
+
+      .shadow:nth-child(2) {
+        margin: 0 -53px;
+      }
+
+      .trash {
+        background-image: url("./images/bins/trashClosed.svg");
+      }
+
+      .recycle {
+        background-image: url("./images/bins/recycleClosed.svg");
+      }
+
+      .compost {
+        background-image: url("./images/bins/compostClosed.svg");
+      }
+
+      .score {
+        font-family: vodka;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-size: 22px;
+        color: var(--blueCol);
+      }
+
       .attempted {
-        align-self: flex-start;
-      }
-
-      .over {
-        background-color: green;
+        font-family: font2;
+        letter-spacing: 0.08em;
+        font-size: 15px;
+        color: var(--greenCol);
       }
 
       .errorMsg {
@@ -50,130 +325,447 @@
         top: 10vh;
         left: 35%;
         display: none;
-        background-color: white;
+        z-index: 2;
+
+        /* styling */
+        padding: 40px;
+        border: 2px solid var(--blueCol);
+        border-radius: 8px;
+        max-height: 90%;
+        left: 50%;
+        transform: translate(-50%, 0);
+        background-color: rgb(244, 253, 255);
       }
 
-      .show-modal {
-        display: block;
+      #moreInfo-modal {
+        /*  Positioning */
+        top: 5%;
+        position: absolute;
+        margin: auto;
+        display: none;
+        z-index: 2;
+
+        /* Styling */
+        padding: 40px;
+        border: 2px solid var(--blueCol);
+        border-radius: 8px;
+        max-height: 90%;
+        width: 80%;
+        overflow-y: scroll;
+        left: 50%;
+        transform: translate(-50%, 0);
+        background-color: rgb(244, 253, 255);
+      }
+
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-thumb {
+        border-radius: 8px;
+        background-color: rgba(180, 191, 204, 0.5);
+      }
+
+      ::-webkit-scrollbar-track {
+        border-radius: 8px;
+      }
+
+      #speech {
+        display: none;
+        position: absolute;
+        top: 60px;
+        z-index: 2;
+      }
+
+      #speechText {
+        margin: 0;
+
+        border-radius: 9999px;
+        border: 2px solid var(--greenCol);
+        padding: 6px 18px;
+        max-width: 250px;
+        text-align: center;
+        background-color: var(--color1);
+        font-family: font2;
+        font-size: 20px;
+      }
+
+      #tag {
+        background-image: url("./images/speechTag.svg");
+        position: relative;
+        width: 27.4px;
+        height: 27.4px;
+        left: 56%;
+        top: -2px;
       }
 
       .button {
-        background-color: yellow;
+        background-color: rgba(255, 255, 255, 0.5);
         padding: 10px;
+        font-family: vodka;
+        text-transform: uppercase;
+        color: var(--blueCol);
+        font-size: 14px;
+        border-radius: 8px;
+        border: 2px solid var(--blueCol);
+        letter-spacing: 0.08em;
+        margin: 0;
+      }
+
+      button:hover {
+        color: var(--orangeCol);
+        cursor: pointer;
+        /* border-color: var(--color1); */
+        /* box-shadow: 0px 2px 0px 0 var(--color4);
+        transform: translateY(-2px); */
+      }
+
+      button:focus {
+        outline: 0;
+      }
+
+      .closeButton {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+      }
+
+      .startButton {
+        /* position: relative; */
+        /* bottom: 20px; */
+        right: 20px;
+        margin: 16px;
+      }
+
+      .credits {
+        margin: 0;
+        padding: 0;
+        color: rgb(63, 63, 63);
+        font-size: 20px;
+      }
+
+      a {
+        text-decoration: none;
+        color: var(--blueCol);
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      @media only screen and (max-width: 700px) {
+        .bin:nth-child(2) {
+          margin: 0 50px;
+        }
+        .shadow:nth-child(2) {
+          margin: 0 -154px;
+        }
+        #moreInfo-modal {
+          width: 90%;
+        }
       }
     </style>
   </head>
+
   <body>
     <div class="game">
-      <div class="score"></div>
-      <div class="attempted"></div>
-      <div class="item" draggable="true"></div>
+      <div class="topBar">
+        <div class="score-elements">
+          <div class="score"></div>
+          <div class="attempted"></div>
+        </div>
 
-      <p class="description"></p>
-      <p class="errorMsg"></p>
+        <div>
+          <button onclick="displayModal('#moreInfo-modal')" class="button">
+            More Info
+          </button>
+          <button class="button">Download Infographic</button>
+        </div>
+      </div>
+      <div class="descriptionBubble">
+        <p class="description"></p>
+      </div>
+      <div class="item"></div>
+
+      <div class="instructions">Drag me to the correct bin!</div>
+
+      <div id="speech">
+        <p id="speechText">This is a placeholder</p>
+        <div id="tag"></div>
+      </div>
 
       <div class="bins">
-        <div class="bin trash">trash</div>
-        <div class="bin recycle">recycle</div>
-        <div class="bin compost">compost</div>
+        <div class="bin trash"></div>
+        <div class="bin recycle"></div>
+        <div class="bin compost"></div>
+      </div>
+
+      <div class="binShadows">
+        <div class="shadow"></div>
+        <div class="shadow"></div>
+        <div class="shadow"></div>
       </div>
     </div>
 
     <div id="win-modal">
-      <p>ok good job, but can you do it again? I dare you.</p>
+      <h2>You did it!</h2>
       <p id="final-score"></p>
-      <button onclick="startOver()" class="button">Start Over</button>
+      <button onclick="startOver()" class="button startButton">
+        Start Over
+      </button>
+      <!-- <button onclick="displayModal('#moreInfo-modal')" class="button">
+        More Info
+      </button>
+      <button class="button">Download Infographic</button> -->
     </div>
+
+    <div id="moreInfo-modal">
+      <button
+        onclick="closeModal('#moreInfo-modal')"
+        class="button closeButton"
+      >
+        Close
+      </button>
+
+      <div class="section">
+        <h1>More Info:</h1>
+
+        <p>
+          This game is a basic guide to sorting your waste. But many factors can
+          affect where an item should go.
+        </p>
+      </div>
+
+      <div class="section">
+        <h1 class="blueText">Recycling:</h1>
+
+        <ul class="outer-list">
+          <li>
+            Clean your items before recycling. One dirty item can spoil an
+            entire bin. If it can't be cleaned, throw it away.
+          </li>
+          <li>
+            Check the guidelines by your local waste treatment facility to see
+            which items they accept. Not all facilites can accept the same
+            things.
+          </li>
+          <li>
+            Some items that aren't accepted by curbside pickup can still be
+            recycled at special facilities. Look up local drop-off locations for
+            things like batteries and plastic grocery bags.
+          </li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h1 class="greenText">Composting:</h1>
+
+        <ul class="outer-list">
+          <li>
+            All parts of an item must be compostable for it to be composted.
+            Veggies mixed with meat or paper towel used with cleaning chemicals
+            should be thrown away.
+          </li>
+          <li>
+            Check whether an item is made of natural or synthetic materials.
+            Cork, for example, is compostable, but some wine bottles use
+            synthetic corks. Tea bags are also sometimes compostable, but not
+            always.
+          </li>
+          <li>
+            Backyard compost bins or heaps will differ from municipial compost
+            facilites in two key ways:
+            <ul class="inner-list">
+              <li>
+                Municipal heaps get much hotter. This means they can break down
+                more items such as meat and compostable plastics.
+              </li>
+              <li>
+                Backyard heaps are more susceptible to pests. Bread and rice are
+                a bad idea in a backyard heap, but can usually be accepted by
+                drop-off services.
+              </li>
+              <li>
+                Always check the guidelines off your drop-off service to see
+                what they accept.
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h1>More resources: <br /></h1>
+        <p>
+          This small game can't cover everything. Below are some links to learn
+          more. I am not affilliated with these sites, but I found them helpful
+          in making this game and living a greener life.
+        </p>
+        <ul class="bulletList">
+          <li>
+            <a href="https://www.compostthis.co.uk/"
+              >A more detailed composting guide</a
+            >
+          </li>
+          <li>
+            <a href="https://search.earth911.com/"
+              >Find special recycling drop-offs near you</a
+            >
+          </li>
+          <li>
+            <a href="https://recyclingsimplified.com/recycling-basics/"
+              >Beginner's Guide to Recycling</a
+            >
+          </li>
+          <li>
+            <a href="https://recork.com/corkwatch/"
+              >Is your wine cork natural?</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.lesswasteworld.com/blog-1/2018/5/17/does-your-tea-bag-compost-a-brand-comparison"
+              >Is your tea bag compostable?</a
+            >
+          </li>
+        </ul>
+        <p>
+          Remember that the first steps in making a difference are
+          <span class="greenText">refuse, reduce,</span> and
+          <span class="greenText">reuse</span>. Proper waste sorting is
+          important, but it is far better to create less waste in the first
+          place.
+        </p>
+      </div>
+
+      <div class="section">
+        <h3>Credits:</h3>
+        <p class="credits">
+          <!-- Credits: <br /> -->
+          <a href="https://ryanpiracha.com" target="_blank">Ryan Piracha</a> -
+          Director, Illustrator, Developer <br />
+          Andrew Hinton - Developer
+        </p>
+      </div>
+    </div>
+
+    <script>
+      // preload images
+      let preloadedImages = [
+        "./images/bins/trashOpen.svg",
+        "./images/bins/recycleOpen.svg",
+        "./images/bins/compostOpen.svg",
+      ];
+      let preloaded = [];
+      for (let i = 0; i < preloadedImages.length; i++) {
+        let preloadedImage = new Image();
+        preloadedImage.src = preloadedImages[i];
+        preloaded.push(preloadedImage);
+      }
+    </script>
 
     <script>
       // Declare Data
       let defaultErr = "I don't like it in there!";
       const items = {
-        apple: {
+        fruits: {
           bin: "compost",
           error: defaultErr,
-          image: "images/appleicon.png",
         },
-        "paper-plate": {
-          bin: "recycle",
-          error: "Oops, try again",
-          image: "images/paperplateicon.png",
+        citrus: {
+          bin: "compost",
+          error: defaultErr,
+        },
+        veggies: {
+          bin: "compost",
+          error: defaultErr,
+        },
+        coffee: {
+          bin: "compost",
+          error: defaultErr,
+        },
+        bread: {
+          bin: "compost",
+          error: defaultErr,
         },
         cardboard: {
           bin: "recycle",
-          error:
-            "Clean cardboard can be composted, but it is better to recycle it",
-          image: "images/cardboardicon.png",
+          error: "Compost is okay, but I like the recycling better.",
+        },
+        "fats-and-oils": {
+          bin: "trash",
+          error: defaultErr,
+        },
+        dairy: {
+          bin: "trash",
+          error: "We don't like it in there!",
+        },
+        eggs: {
+          bin: "trash",
+          error: defaultErr,
+        },
+        meat: {
+          bin: "trash",
+          error: defaultErr,
         },
         bones: {
           bin: "trash",
           error: defaultErr,
-          image: "images/bone.png",
-        },
-        meat: {
-          bin: "trash",
-          error: "oops try again",
-          image: "images/meaticon.png",
-        },
-        fish: {
-          bin: "trash",
-          error: defaultErr,
-          image: "images/fishicon.png",
-        },
-        "dairy-products": {
-          bin: "trash",
-          error: defaultErr,
-          image: "images/dairyicon.png",
-        },
-        "fat-oil-and-grease": {
-          bin: "trash",
-          error: defaultErr,
-          image: "images/oilicon.png",
-        },
-        bread: {
-          bin: "compost",
-          error: "Oops, try again",
-          image: "images/breadicon.png",
-        },
-        "glossy-paper": {
-          bin: "trash",
-          error: "Oops, try again",
-          image: "images/magazineicon.png",
-        },
-        "pizza-box": {
-          bin: "compost",
-          error: "Oops, try again",
-          image: "images/pizzaicon.png",
-        },
-        pasta: {
-          bin: "compost",
-          error: "Oops, try again",
-          image: "images/pastaicon.png",
-        },
-        eggshells: {
-          bin: "compost",
-          error: defaultErr,
-          image: "images/eggshells.png",
-        },
-        styrofoam: {
-          bin: "trash",
-          error: defaultErr,
-          image: "images/eggshells.png",
-        },
-        "plastic-bottles": {
-          bin: "recycle",
-          error: defaultErr,
-          image: "images/eggshells.png",
-        },
-        "glass-bottles": {
-          bin: "recycle",
-          error: defaultErr,
-          image: "images/eggshells.png",
         },
         "aluminum-cans": {
           bin: "recycle",
           error: defaultErr,
-          image: "images/eggshells.png",
+        },
+        "paper-cartons": {
+          bin: "recycle",
+          error: defaultErr,
+        },
+        "plastic-bottles": {
+          bin: "recycle",
+          error: defaultErr,
+        },
+        "glass-bottles": {
+          bin: "recycle",
+          error: defaultErr,
+        },
+        styrofoam: {
+          bin: "trash",
+          error: defaultErr,
+        },
+        eggshells: {
+          bin: "compost",
+          error: defaultErr,
+        },
+        "tea-leaves": {
+          bin: "compost",
+          error: defaultErr,
+        },
+        newspaper: {
+          bin: "recycle",
+          error: defaultErr,
+        },
+        napkins: {
+          bin: "trash",
+          error: "I'm icky, I can't go there!",
+        },
+        "paper-towel": {
+          bin: "trash",
+          error: defaultErr,
+        },
+        "paper-plates": {
+          bin: "trash",
+          error: "I'm coated in wax. I can't go there!",
+        },
+        "plastic-utensils": {
+          bin: "trash",
+          error: "I'm too small for recycle centers to sort!",
+        },
+        receipts: {
+          bin: "trash",
+          error: "I'm coated in plastic. I can't go in there!",
+        },
+        "glossy-paper": {
+          bin: "recycle",
+          error: defaultErr,
         },
       };
 
@@ -181,15 +773,36 @@
 
       // Setup current item
       let inPlay = shuffle(Object.keys(items));
-      let score = 0;
-      let attempted = 0;
       let lastSuccess = false;
       let itemImg = document.querySelectorAll(".item")[0];
+      let game = document.querySelectorAll(".game")[0];
       let itemDes = document.querySelectorAll(".description")[0];
-      let itemErr = document.querySelectorAll(".errorMsg")[0];
+      let speechElement = document.querySelector("#speech");
+      let speechText = document.querySelector("#speechText");
+
+      let displayFinalScore = document.querySelector("#final-score");
+      let instructions = document.querySelectorAll(".instructions")[0];
+
+      //score variables
+      let score = 0;
+      let attempted = 0;
+      let calculatedScore = 100;
       let scoreEl = document.querySelectorAll(".score")[0];
       let attemptedEl = document.querySelectorAll(".attempted")[0];
-      let modal = document.querySelector("#win-modal");
+      let totalItems = inPlay.length;
+      let onItem = 1;
+
+      // Draging variables
+      let dragActive = false;
+      let canDrag = true;
+      let currentX, currentY, initialX, initialY;
+      let offsetX = (offsetY = 0);
+
+      // Animation Variables
+      let animationStartTime;
+      let animating = false;
+      let animationPos = 0;
+      let animationDuration = 750;
 
       // GAME LOOP START
       let currentItem = inPlay[0];
@@ -197,43 +810,116 @@
       displayScore();
 
       // Helper Functions
+      function setEmotion(emotion) {
+        const itemWidth = parseInt(getComputedStyle(itemImg).width, 10);
+        switch (emotion) {
+          case "surprised":
+            itemImg.style.backgroundPositionX = `${itemWidth * -1}px`;
+            break;
+          case "happy":
+            itemImg.style.backgroundPositionX = `${itemWidth * -2}px`;
+            break;
+          case "sad":
+            itemImg.style.backgroundPositionX = `${itemWidth * -3}px`;
+            break;
+          default:
+            itemImg.style.backgroundPositionX = "0px";
+            break;
+        }
+      }
+
+      function isOverlapping(rect1, rect2) {
+        return !(
+          rect1.right < rect2.left ||
+          rect1.left > rect2.right ||
+          rect1.bottom < rect2.top ||
+          rect1.top > rect2.bottom
+        );
+      }
+
+      function getOverlappingBin(rect) {
+        const bins = document.querySelectorAll(".bin");
+        for (let i = 0; i < bins.length; i++) {
+          const binRect = bins[i].getBoundingClientRect();
+          let binName = bins[i].classList.toString().replace("bin", "").trim();
+          if (isOverlapping(rect, binRect)) {
+            return binName;
+          }
+        }
+      }
+
+      function getTranslation(element) {
+        if (element.style.transform) {
+          let str = element.style.transform;
+          return str
+            .replace("translate3d(", "")
+            .replace(/px/g, "")
+            .replace(")", "")
+            .split(", ")
+            .map((s) => +s);
+        }
+      }
+
+      function closeAllBins() {
+        const bins = document.querySelectorAll(".bin");
+        for (let i = 0; i < bins.length; i++) {
+          let binName = bins[i].classList.toString().replace("bin", "").trim();
+          bins[i].style = `url("./images/bins/${binName}Closed.png")`;
+        }
+      }
+
       function startOver() {
         inPlay = shuffle(Object.keys(items));
         score = 0;
         attempted = 0;
+        onItem = 1;
+        displayScore();
         currentItem = inPlay[0];
         displayItem(items[currentItem], currentItem);
-        modal.style.display = "none";
+        closeModal("#win-modal");
+        displayModal(".instructions");
       }
 
       function displayItem(itemConfig, itemName) {
-        itemImg.style.backgroundImage = `url('${itemConfig.image}')`;
+        itemImg.style.backgroundImage = `url("./images/${itemName}.svg")`;
         itemDes.innerHTML = toTitleCase(itemName);
       }
 
-      function setNextItem() {
-        console.log(inPlay);
-        let finishedItem = inPlay.shift();
+      function resetItemPosition() {
+        itemImg.style.transform = "translate3d(0,0,0)";
+        currentX = currentY = initialX = initialY = offsetX = offsetY = 0;
+      }
 
-        if (!lastSuccess) {
-          // check if item is not correct
-          inPlay.push(finishedItem); // put item on end
-        }
+      function setNextItem() {
+        let finishedItem = inPlay.shift();
+        setEmotion();
+        closeModal("#speech");
 
         if (inPlay.length > 0) {
           // check if game is over
           currentItem = inPlay[0];
+          onItem++;
+          displayScore();
           displayItem(items[currentItem], currentItem);
-          console.log("continue playing");
         } else {
-          modal.style.display = "block";
-          console.log("end game");
+          if (calculatedScore > 85)
+            displayFinalScore.innerHTML = `Your final score was ${calculatedScore}%! Keep up the good work!`;
+          else
+            displayFinalScore.innerHTML = `Your final score was ${calculatedScore}%! Play again or click the More Info button to learn more.`;
+
+          displayModal("#win-modal");
         }
       }
 
       function displayScore() {
-        scoreEl.innerHTML = `Score: ${score}`;
-        attemptedEl.innerHTML = `Attempts: ${attempted}`;
+        calculatedScore = Math.round((score * 100) / attempted);
+        if (attempted == 0) {
+          scoreEl.innerHTML = `Current Score:`;
+        } else {
+          //prettier-ignore
+          scoreEl.innerHTML = `Current Score: ${calculatedScore}%`;
+        }
+        attemptedEl.innerHTML = `#${onItem} of ${totalItems}`;
       }
 
       function toTitleCase(str) {
@@ -255,47 +941,164 @@
         return shuffledArr;
       }
 
+      function setItemTranslate(x, y) {
+        itemImg.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+      }
+
+      function setSpeechTranslate() {
+        const coord = getTranslation(itemImg);
+        speechElement.style.transform = `translate3d(${coord[0]}px, ${coord[1]}px, 0)`;
+      }
+
+      function displayModal(elementId) {
+        const modalElement = document.querySelector(elementId);
+        modalElement.style.display = "block";
+      }
+      function closeModal(elementId) {
+        const modalElement = document.querySelector(elementId);
+        modalElement.style.display = "none";
+      }
+
       // Event Handlers
       function handleDragStart(event) {
-        itemErr.innerHTML = "";
+        closeModal("#speech");
+        if (event.type === "touchstart") {
+          initialX = event.touches[0].clientX - offsetX;
+          initialY = event.touches[0].clientY - offsetY;
+        } else {
+          initialX = event.clientX - offsetX;
+          initialY = event.clientY - offsetY;
+        }
+        if (event.target.classList.contains("item") && canDrag) {
+          //check if you're clicking an item AND if you may drag things
+          setEmotion("surprised");
+          itemImg.style.cursor = "grabbing";
+          dragActive = true;
+          closeModal(".instructions");
+        }
       }
 
-      function handleDragOver(event) {
-        event.preventDefault();
+      function handleDrag(event) {
+        if (dragActive) {
+          event.preventDefault();
+          if (event.type === "touchstart") {
+            currentX = event.touches[0].clientX - initialX;
+            currentY = event.touches[0].clientY - initialY;
+          } else {
+            currentX = event.clientX - initialX;
+            currentY = event.clientY - initialY;
+          }
+          offsetX = currentX;
+          offsetY = currentY;
+          setItemTranslate(currentX, currentY);
+
+          const binName = getOverlappingBin(itemImg.getBoundingClientRect());
+          const testItemHeight = itemImg.getBoundingClientRect().height;
+
+          if (binName) {
+            const overlappingBin = document.querySelectorAll(`.${binName}`)[0];
+            overlappingBin.style.backgroundImage = `url("./images/bins/${binName}Open.svg")`;
+          } else {
+            closeAllBins();
+          }
+        }
       }
 
-      function handleDrop(event) {
-        event.target.classList.remove("over");
+      function handleDragEnd(event) {
+        itemImg.style.cursor = "grab";
+        if (canDrag) setEmotion();
+
+        initialX = currentX;
+        initialY = currentY;
+
+        const binName = getOverlappingBin(event.target.getBoundingClientRect());
+        if (
+          //bin collision
+          binName &&
+          event.target.getBoundingClientRect().x !== 8 &&
+          dragActive
+        ) {
+          checkSuccess(binName);
+        }
+        dragActive = false;
+      }
+
+      function checkSuccess(binName) {
         let correctBin = items[currentItem].bin;
         attempted++;
-        lastSuccess = event.target.classList.contains(correctBin);
+        lastSuccess = correctBin === binName;
+        animationStartTime = Date.now();
+        canDrag = false;
         if (lastSuccess) {
-          itemErr.innerHTML = "Hooray!";
+          //if correct bin
+          setEmotion("happy");
+          speechText.innerHTML = "Hooray!";
           score++;
+          window.requestAnimationFrame(animateHappy);
+
+          setTimeout(() => {
+            closeAllBins();
+            setNextItem();
+            resetItemPosition();
+            canDrag = true;
+          }, animationDuration);
         } else {
-          itemErr.innerHTML = items[currentItem].error;
+          setEmotion("sad");
+          speechText.innerHTML = items[currentItem].error;
+          closeAllBins();
+          window.requestAnimationFrame(animateSad);
+
+          setTimeout(() => {
+            canDrag = true;
+            setEmotion();
+          }, animationDuration);
         }
+        setSpeechTranslate();
+        displayModal("#speech");
         displayScore();
-        setNextItem();
       }
 
-      function handleDragEnter(event) {
-        event.target.classList.add("over");
+      function animateHappy() {
+        let jumpHeight = 7;
+        let jumpSpeed = 60;
+        let currentTime = Date.now();
+        animationPos = currentTime - animationStartTime;
+        let pos = Math.cos(animationPos / jumpSpeed) * jumpHeight;
+        let currentPos = getTranslation(itemImg);
+        setItemTranslate(currentPos[0], currentPos[1] + pos);
+        if (currentTime < animationStartTime + animationDuration) {
+          window.requestAnimationFrame(animateHappy);
+        }
       }
 
-      function handleDragLeave(event) {
-        event.target.classList.remove("over");
+      function animateSad() {
+        let jumpHeight = 7;
+        let jumpSpeed = 60;
+        let currentTime = Date.now();
+        animationPos = currentTime - animationStartTime;
+        let pos = Math.cos(animationPos / jumpSpeed) * jumpHeight;
+        let currentPos = getTranslation(itemImg);
+        setItemTranslate(currentPos[0] + pos, currentPos[1]);
+        if (currentTime < animationStartTime + animationDuration) {
+          window.requestAnimationFrame(animateSad);
+        }
       }
 
-      itemImg.addEventListener("dragstart", handleDragStart, false);
-
-      let bins = document.querySelectorAll(".bin");
-      for (let bin of bins) {
-        bin.addEventListener("dragover", handleDragOver, false);
-        bin.addEventListener("dragenter", handleDragEnter, false);
-        bin.addEventListener("dragleave", handleDragLeave, false);
-        bin.addEventListener("drop", handleDrop, false);
+      function handleBinMouseEnter(event) {
+        if (dragActive) {
+          let element = event.target;
+          let binName = element.classList.toString().replace("bin", "").trim();
+          element.style.backgroundImage = `url("./images/bins/${binName}Open.svg")`;
+        }
       }
+
+      // Event Listeners
+      game.addEventListener("touchstart", handleDragStart, false);
+      game.addEventListener("mousedown", handleDragStart, false);
+      game.addEventListener("touchmove", handleDrag, false);
+      game.addEventListener("mousemove", handleDrag, false);
+      game.addEventListener("touchend", handleDragEnd, false);
+      game.addEventListener("mouseup", handleDragEnd, false);
     </script>
   </body>
 </html>
