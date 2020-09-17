@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Compost Game</title>
+    <title>Learn to sort your compost and recycling!</title>
     <style>
       html,
       body,
@@ -464,6 +464,7 @@
         }
       }
     </style>
+    <link rel="shortcut icon" href="./favicon.ico" />
   </head>
 
   <body>
@@ -584,11 +585,11 @@
                 a bad idea in a backyard heap, but can usually be accepted by
                 drop-off services.
               </li>
-              <li>
-                Always check the guidelines off your drop-off service to see
-                what they accept.
-              </li>
             </ul>
+          </li>
+          <li>
+            Always check the guidelines off your drop-off service to see what
+            they accept.
           </li>
         </ul>
       </div>
@@ -629,7 +630,7 @@
           </li>
         </ul>
         <p>
-          Remember that the first steps in making a difference are
+          Remember, the first steps in making a difference are
           <span class="greenText">refuse, reduce,</span> and
           <span class="greenText">reuse</span>. Proper waste sorting is
           important, but it is far better to create less waste in the first
@@ -642,7 +643,7 @@
         <p class="credits">
           <!-- Credits: <br /> -->
           <a href="https://ryanpiracha.com" target="_blank">Ryan Piracha</a> -
-          Director, Illustrator, Developer <br />
+          Design & Illustraton, Developer <br />
           Andrew Hinton - Developer
         </p>
       </div>
@@ -687,9 +688,9 @@
           bin: "compost",
           error: defaultErr,
         },
-        cardboard: {
-          bin: "recycle",
-          error: "Compost is okay, but I like the recycling better.",
+        pasta: {
+          bin: "compost",
+          error: defaultErr,
         },
         "fats-and-oils": {
           bin: "trash",
@@ -723,6 +724,10 @@
           bin: "recycle",
           error: defaultErr,
         },
+        "plastic-containers": {
+          bin: "recycle",
+          error: defaultErr,
+        },
         "glass-bottles": {
           bin: "recycle",
           error: defaultErr,
@@ -735,13 +740,29 @@
           bin: "compost",
           error: defaultErr,
         },
-        "tea-leaves": {
+        tea: {
           bin: "compost",
           error: defaultErr,
         },
         newspaper: {
           bin: "recycle",
           error: defaultErr,
+        },
+        paper: {
+          bin: "recycle",
+          error: defaultErr,
+        },
+        cardboard: {
+          bin: "recycle",
+          error: "Compost is okay, but I like the recycling better.",
+        },
+        envelopes: {
+          bin: "recycle",
+          error: defaultErr,
+        },
+        "bubble-envelopes": {
+          bin: "trash",
+          error: "My bubble wrap can't go in there!",
         },
         napkins: {
           bin: "trash",
