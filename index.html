@@ -150,6 +150,8 @@
 
       .section {
         margin: 12px 0 36px 0;
+        position: relative; 
+        bottom: 50px;
       }
       .blueText {
         color: var(--blueCol);
@@ -170,9 +172,10 @@
         font-family: font2;
         font-size: 24px;
         padding-left: 30px;
+        padding-right: 50px;
       }
       p {
-        padding: 16px 0 0 46px;
+        padding: 16px 50px 0 46px;
       }
       .outer-list > li {
         list-style-type: none;
@@ -337,6 +340,10 @@
         background-color: rgb(244, 253, 255);
       }
 
+      .winText {
+        padding: 0;
+      }
+
       #moreInfo-modal {
         /*  Positioning */
         top: 5%;
@@ -424,16 +431,19 @@
       }
 
       .closeButton {
-        position: absolute;
-        top: 20px;
-        right: 20px;
+        position: sticky;
+        /* position: -webkit-sticky; */
+        top: 0;
+        bottom: 100%;
+        left: 100%;
+        z-index: 10;
       }
 
       .startButton {
-        /* position: relative; */
-        /* bottom: 20px; */
-        right: 20px;
-        margin: 16px;
+        position: relative;
+        bottom:0;
+        left:0;
+        margin-top: 30px;
       }
 
       .credits {
@@ -479,7 +489,7 @@
           <button onclick="displayModal('#moreInfo-modal')" class="button">
             More Info
           </button>
-          <button class="button">Download Infographic</button>
+          <a download="Banana Bread Recipe.pdf" class="button"> Download Infographic</a>
         </div>
       </div>
       <div class="descriptionBubble">
@@ -508,15 +518,19 @@
     </div>
 
     <div id="win-modal">
-      <h2>You did it!</h2>
-      <p id="final-score"></p>
+      <h2 class="blueText">You did it!</h2>
+      <h3 id="final-score" class="greenText"></h3></br>
+      <p class="winText">Thanks for playing!</p></br>
+      <p class="winText">
+        Click below to play again, learn more, or download a handy infographic to keep in your kitchen!
+      </p>
       <button onclick="startOver()" class="button startButton">
-        Start Over
+        Play Again
       </button>
-      <!-- <button onclick="displayModal('#moreInfo-modal')" class="button">
+      <button onclick="displayModal('#moreInfo-modal')" class="button">
         More Info
       </button>
-      <button class="button">Download Infographic</button> -->
+      <button class="button">Download Infographic</button>
     </div>
 
     <div id="moreInfo-modal">
@@ -923,10 +937,7 @@
           displayScore();
           displayItem(items[currentItem], currentItem);
         } else {
-          if (calculatedScore > 85)
-            displayFinalScore.innerHTML = `Your final score was ${calculatedScore}%! Keep up the good work!`;
-          else
-            displayFinalScore.innerHTML = `Your final score was ${calculatedScore}%! Play again or click the More Info button to learn more.`;
+          displayFinalScore.innerHTML = `Your final score was ${calculatedScore}%`;
 
           displayModal("#win-modal");
         }
