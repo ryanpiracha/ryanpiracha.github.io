@@ -412,15 +412,17 @@
         margin: 0;
       }
 
-      button:hover {
+      .button:hover {
         color: var(--orangeCol);
         cursor: pointer;
+        text-decoration: none !important;
+
         /* border-color: var(--color1); */
         /* box-shadow: 0px 2px 0px 0 var(--color4);
         transform: translateY(-2px); */
       }
 
-      button:focus {
+      .button:focus {
         outline: 0;
       }
 
@@ -483,7 +485,7 @@
           <button onclick="displayModal('#moreInfo-modal')" class="button">
             More Info
           </button>
-          <a href="CompostingInfogrpahic.pdf" download="CompostingInfogrpahic.pdf" target="_blank" class="button"> Download Infographic</a>
+          <a href="CompostingInfogrpahic.pdf" target="_blank" class="button"> Download Infographic</a>
         </div>
       </div>
       <div class="descriptionBubble">
