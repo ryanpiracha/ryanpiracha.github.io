@@ -526,7 +526,7 @@
       <button onclick="displayModal('#moreInfo-modal')" class="button">
         More Info
       </button>
-      <button class="button">Download Infographic</button>
+      <a href="CompostingInfogrpahic.pdf" target="_blank" class="button"> Download Infographic</a>
     </div>
 
     <div id="moreInfo-modal">
@@ -659,20 +659,7 @@
       </div>
     </div>
 
-    <script>
-      // preload images
-      let preloadedImages = [
-        "./images/bins/trashOpen.svg",
-        "./images/bins/recycleOpen.svg",
-        "./images/bins/compostOpen.svg",
-      ];
-      let preloaded = [];
-      for (let i = 0; i < preloadedImages.length; i++) {
-        let preloadedImage = new Image();
-        preloadedImage.src = preloadedImages[i];
-        preloaded.push(preloadedImage);
-      }
-    </script>
+    
 
     <script>
       // Declare Data
@@ -1127,6 +1114,23 @@
       game.addEventListener("mousemove", handleDrag, false);
       game.addEventListener("touchend", handleDragEnd, false);
       game.addEventListener("mouseup", handleDragEnd, false);
+
+      // preload images
+      let preloadedImages = [
+        "./images/bins/trashOpen.svg",
+        "./images/bins/recycleOpen.svg",
+        "./images/bins/compostOpen.svg",
+      ];
+
+      Object.keys(items).forEach((item)=>preloadedImages.push(`./images/${item}.svg`)); //TODO: load n+1 item on item n.
+      let preloaded = [];
+      for (let i = 0; i < preloadedImages.length; i++) {
+        let preloadedImage = new Image();
+        preloadedImage.src = preloadedImages[i];
+        preloaded.push(preloadedImage);
+
+    
+      }
     </script>
   </body>
 </html>
