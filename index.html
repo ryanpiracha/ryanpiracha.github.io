@@ -192,7 +192,7 @@
         flex-direction: column;
         align-items: center;
         height: 100vh;
-        padding: 50px;
+        padding: 8px;
         min-height: 600px;
         /* min-width: 700px; */
       }
@@ -223,7 +223,7 @@
       }
 
       .item {
-        --itemSize: 110px;
+        --itemSize: 100px;
         height: var(--itemSize);
         width: var(--itemSize);
         touch-action: none;
@@ -250,7 +250,7 @@
         justify-content: center;
         width: 100%;
         position: absolute;
-        bottom: 18%;
+        bottom: 12%; /* adjust bin position from bottom*/
         background-color: transparent;
       }
 
@@ -458,6 +458,10 @@
         text-decoration: underline;
       }
 
+      .desktop {
+        display: none;
+      }
+
       @media only screen and (max-width: 700px) {
         .bin:nth-child(2) {
           margin: 0 50px;
@@ -485,7 +489,7 @@
           <button onclick="displayModal('#moreInfo-modal')" class="button">
             More Info
           </button>
-          <a href="CompostingInfogrpahic.pdf" target="_blank" class="button"> Download Infographic</a>
+          <a href="CompostingInfogrpahic.pdf" target="_blank" class="button desktop"> Download Infographic</a>
         </div>
       </div>
       <div class="descriptionBubble">
