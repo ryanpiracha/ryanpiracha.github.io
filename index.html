@@ -243,15 +243,15 @@
         top: 300px;
       }
 
-      .bins,
-      .binShadows {
+      .bins {
         /* TODO: set minimum position-y */
         display: flex;
         justify-content: center;
-        width: 100%;
+        width: 70%;
         position: absolute;
         bottom: 12%; /* adjust bin position from bottom*/
         background-color: transparent;
+        right: 11%;
       }
 
       .bin {
@@ -260,6 +260,10 @@
         background-size: contain;
         background-repeat: no-repeat;
         z-index: 1;
+      }
+
+      .binWrapper {
+        width: 33%;
       }
 
       .binWrapper:nth-child(2) {
@@ -458,11 +462,15 @@
         text-decoration: underline;
       }
 
+
+      @media only screen and (max-width: 700px) {
       .desktop {
         display: none;
       }
+        .bins {
+          right: 16%;
+        }
 
-      @media only screen and (max-width: 700px) {
         .binWrapper:nth-child(2) {
           margin: 0 50px;
         }
