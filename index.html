@@ -1035,6 +1035,7 @@
 
           if (binName) {
             const overlappingBin = document.querySelectorAll(`.${binName}`)[0];
+            closeAllBins();
             overlappingBin.style.backgroundImage = `url("./images/bins/${binName}Open.svg")`;
           } else {
             closeAllBins();
