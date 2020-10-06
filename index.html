@@ -262,7 +262,7 @@
         z-index: 1;
       }
 
-      .bin:nth-child(2) {
+      .binWrapper:nth-child(2) {
         margin: 0 150px;
       }
 
@@ -277,8 +277,8 @@
         background-blend-mode: multiply;
         background-size: contain;
         position: relative;
-        top: 48px;
-        left: 113px;
+        top: -5px;
+        left: 66px;
         overflow: hidden;
       }
 
@@ -463,12 +463,12 @@
       }
 
       @media only screen and (max-width: 700px) {
-        .bin:nth-child(2) {
+        .binWrapper:nth-child(2) {
           margin: 0 50px;
         }
-        .shadow:nth-child(2) {
-          margin: 0 -154px;
-        }
+        /* .shadow:nth-child(2) {
+          margin: 0 50px;
+        } */
         #moreInfo-modal {
           width: 90%;
         }
@@ -505,16 +505,27 @@
       </div>
 
       <div class="bins">
-        <div class="bin trash"></div>
-        <div class="bin recycle"></div>
-        <div class="bin compost"></div>
+        <div class="binWrapper">
+          <div class="bin trash"></div>
+          <div class="shadow"></div>
+        </div>
+
+       <div class="binWrapper">
+         <div class="bin recycle"></div>
+         <div class="shadow"></div>
+      </div> 
+
+      <div class="binWrapper">
+          <div class="bin compost"></div>
+          <div class="shadow"></div>
+      </div>
       </div>
 
-      <div class="binShadows">
+      <!-- <div class="binShadows">
         <div class="shadow"></div>
         <div class="shadow"></div>
         <div class="shadow"></div>
-      </div>
+      </div> -->
     </div>
 
     <div id="win-modal">
