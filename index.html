@@ -467,8 +467,17 @@
       .desktop {
         display: none;
       }
+        .score{
+          font-size: 20px;
+        }
+        .button{
+          font-size: 12px;
+        }
         .item {
-          --itemSize: 80px;
+          --itemSize: 90px;
+        }
+        .description {
+          font-size: 18px;
         }
         .bin{
           height: 200px;
@@ -478,6 +487,14 @@
           right: 27%;
           bottom: 2%;
           width: 55%;
+        }
+
+        .shadow {
+          width: 222px;
+          height: 36px;
+          min-width: 222px;
+          min-height: 36px;
+          left: 61px;
         }
 
         .binWrapper:nth-child(2) {
@@ -535,17 +552,17 @@
       <div class="bins">
         <div class="binWrapper">
           <div class="bin trash"></div>
-          <!-- <div class="shadow"></div> -->
+          <div class="shadow"></div>
         </div>
 
        <div class="binWrapper">
          <div class="bin recycle"></div>
-         <!-- <div class="shadow"></div> -->
+         <div class="shadow"></div>
       </div> 
 
       <div class="binWrapper">
           <div class="bin compost"></div>
-          <!-- <div class="shadow"></div> -->
+          <div class="shadow"></div>
       </div>
       </div>
 
