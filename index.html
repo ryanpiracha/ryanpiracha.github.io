@@ -169,15 +169,15 @@
         padding-right: 50px;
       }
       p {
-        padding: 16px 50px 0 46px;
+        padding-top: 16px;
       }
       .outer-list > li {
         list-style-type: none;
       }
 
       li {
-        padding: 16px;
-        margin-bottom: 8px;
+        /* padding: 16px; */
+        margin: 16px 0;
       }
 
       .bulletList {
@@ -240,7 +240,7 @@
         font-family: font2;
         color: var(--greenCol);
         position: absolute;
-        top: 300px;
+        top: 250px;
       }
 
       .bins {
@@ -463,12 +463,21 @@
       }
 
 
-      @media only screen and (max-width: 700px) {
+      @media only screen and (max-width: 850px) {
       .desktop {
         display: none;
       }
+        .item {
+          --itemSize: 80px;
+        }
+        .bin{
+          height: 200px;
+          width: 86px; /* width ratio 43.3% of height*/
+        }
         .bins {
-          right: 16%;
+          right: 27%;
+          bottom: 2%;
+          width: 55%;
         }
 
         .binWrapper:nth-child(2) {
@@ -479,7 +488,18 @@
         } */
         #moreInfo-modal {
           width: 90%;
+          padding: 20px;
         }
+        p,
+        ul {
+        font-family: font2;
+        font-size: 20px;
+        padding-left: 10px;
+        padding-right: 15px;
+        }
+      .bulletList {
+        padding: 16px 25px;
+      }
       }
     </style>
     <link rel="shortcut icon" href="./favicon.ico" />
@@ -515,17 +535,17 @@
       <div class="bins">
         <div class="binWrapper">
           <div class="bin trash"></div>
-          <div class="shadow"></div>
+          <!-- <div class="shadow"></div> -->
         </div>
 
        <div class="binWrapper">
          <div class="bin recycle"></div>
-         <div class="shadow"></div>
+         <!-- <div class="shadow"></div> -->
       </div> 
 
       <div class="binWrapper">
           <div class="bin compost"></div>
-          <div class="shadow"></div>
+          <!-- <div class="shadow"></div> -->
       </div>
       </div>
 
