@@ -728,127 +728,188 @@
 
     <script>
       // Declare Data
+      let defaultCorrect = "Hooray!"
       let defaultErr = "I don't like it in there!";
       const items = {
         fruits: {
           bin: "compost",
-          error: defaultErr,
+          trash: defaultErr,
+          recycle: defaultErr,
+          compost: defaultCorrect,
         },
         citrus: {
           bin: "compost",
-          error: defaultErr,
+          trash: defaultErr,
+          recycle: defaultErr,
+          compost: defaultCorrect,
         },
         veggies: {
           bin: "compost",
-          error: defaultErr,
+          trash: defaultErr,
+          recycle: defaultErr,
+          compost: defaultCorrect,
         },
         coffee: {
           bin: "compost",
-          error: defaultErr,
+          trash: defaultErr,
+          recycle: defaultErr,
+          compost: defaultCorrect,
         },
         bread: {
           bin: "compost",
-          error: defaultErr,
+          trash: defaultErr,
+          recycle: defaultErr,
+          compost: defaultCorrect,
         },
         pasta: {
           bin: "compost",
-          error: defaultErr,
+          trash: defaultErr,
+          recycle: defaultErr,
+          compost: defaultCorrect,
         },
         "fats-and-oils": {
           bin: "trash",
-          error: defaultErr,
+          trash: defaultCorrect,
+          recycle: defaultErr,
+          compost: defaultErr,
         },
         dairy: {
           bin: "trash",
-          error: "We don't like it in there!",
+          trash: defaultCorrect,
+          recycle: "We don't like it in there!",
+          compost: "We don't like it in there!",
         },
         eggs: {
           bin: "trash",
-          error: defaultErr,
+          trash: defaultCorrect,
+          recycle: defaultErr,
+          compost: defaultErr,
         },
         meat: {
           bin: "trash",
-          error: defaultErr,
+          trash: defaultCorrect,
+          recycle: defaultErr,
+          compost: defaultErr,
         },
         bones: {
           bin: "trash",
-          error: defaultErr,
+          trash: defaultCorrect,
+          recycle: defaultErr,
+          compost: defaultErr,
         },
         "aluminum-cans": {
           bin: "recycle",
-          error: defaultErr,
+          trash: defaultErr,
+          recycle: defaultCorrect,
+          compost: defaultErr,
         },
         "paper-cartons": {
           bin: "recycle",
-          error: defaultErr,
+          trash: defaultErr,
+          recycle: defaultCorrect,
+          compost: defaultErr,
         },
         "plastic-bottles": {
           bin: "recycle",
-          error: defaultErr,
+          trash: defaultErr,
+          recycle: defaultCorrect,
+          compost: defaultErr,
         },
         "plastic-containers": {
           bin: "recycle",
-          error: defaultErr,
+          trash: defaultErr,
+          recycle: defaultCorrect,
+          compost: defaultErr,
         },
         "glass-bottles": {
           bin: "recycle",
-          error: defaultErr,
+          trash: defaultErr,
+          recycle: defaultCorrect,
+          compost: defaultErr,
         },
         styrofoam: {
           bin: "trash",
-          error: defaultErr,
+          trash: defaultCorrect,
+          recycle: defaultErr,
+          compost: defaultErr,
         },
         eggshells: {
           bin: "compost",
-          error: defaultErr,
+          trash: defaultErr,
+          recycle: defaultErr,
+          compost: defaultCorrect,
         },
         tea: {
           bin: "compost",
-          error: defaultErr,
+          trash: defaultErr,
+          recycle: defaultErr,
+          compost: "Hooray! Just make sure my bag is compostable too!",
         },
         newspaper: {
           bin: "recycle",
-          error: defaultErr,
+          trash: defaultErr,
+          recycle: defaultCorrect,
+          compost: defaultErr,
         },
         paper: {
           bin: "recycle",
-          error: defaultErr,
+          trash: defaultErr,
+          recycle: defaultCorrect,
+          compost: defaultErr,
         },
         cardboard: {
           bin: "recycle",
-          error: "Compost is okay, but I like the recycling better.",
+          trash: defaultErr,
+          recycle: defaultCorrect,
+          compost: "Compost is okay, but I like the recycling better.",
         },
         envelopes: {
           bin: "recycle",
-          error: defaultErr,
+          trash: defaultErr,
+          recycle: defaultCorrect,
+          compost: defaultErr,
         },
         "bubble-envelopes": {
           bin: "trash",
-          error: "My bubble wrap can't go in there!",
+          trash: defaultCorrect,
+          recycle: "My bubble wrap can't go in there!",
+          compost: "My bubble wrap can't go in there!",
         },
         napkins: {
           bin: "trash",
-          error: "I'm icky, I can't go there!",
+          trash: defaultCorrect,
+          recycle: "I'm icky, I can't go there!",
+          compost: "I'm icky, I can't go there!",
         },
         "paper-towel": {
           bin: "trash",
-          error: defaultErr,
+          trash: defaultCorrect,
+          recycle: defaultErr,
+          compost: defaultErr,
         },
         "paper-plates": {
           bin: "trash",
-          error: "I'm coated in wax. I can't go there!",
+          trash: defaultCorrect,
+          recycle: "I'm coated in wax. I can't go there!",
+          compost: "I'm coated in wax. I can't go there!",
         },
         "plastic-utensils": {
           bin: "trash",
-          error: "I'm too small for recycle centers to sort!",
+          trash: defaultCorrect,
+          recycle: "I'm too small for recycle centers to sort!",
+          compost: "I'm plastic, I'm not biodegradable!",
         },
         receipts: {
           bin: "trash",
-          error: "I'm coated in plastic. I can't go in there!",
+          trash: defaultCorrect,
+          recycle: "I'm coated in plastic. I can't go in there!",
+          compost: "I'm coated in plastic. I can't go in there!",
         },
         "glossy-paper": {
           bin: "recycle",
-          error: defaultErr,
+          trash: defaultErr,
+          recycle: defaultCorrect,
+          compost: defaultErr,
         },
       };
 
@@ -1113,7 +1174,6 @@
         if (lastSuccess) {
           //if correct bin
           setEmotion("happy");
-          speechText.innerHTML = "Hooray!";
           score++;
           window.requestAnimationFrame(animateHappy);
 
@@ -1125,7 +1185,6 @@
           }, animationDuration);
         } else {
           setEmotion("sad");
-          speechText.innerHTML = items[currentItem].error;
           closeAllBins();
           window.requestAnimationFrame(animateSad);
 
@@ -1134,6 +1193,7 @@
             setEmotion();
           }, animationDuration);
         }
+        speechText.innerHTML = items[currentItem][binName];
         setSpeechTranslate();
         displayModal("#speech");
         displayScore();
