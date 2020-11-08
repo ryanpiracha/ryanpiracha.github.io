@@ -1196,7 +1196,27 @@
         speechText.innerHTML = items[currentItem][binName];
         setSpeechTranslate();
         displayModal("#speech");
+        clampSpeechBubble();
         displayScore();
+      }
+
+
+      function clampSpeechBubble() {
+        if (speechElement.style.display !== 'none') {
+          const bodyRect = document.body.getBoundingClientRect();
+          const elemRect = speechElement.getBoundingClientRect();
+            const offset = elemRect.right - bodyRect.right
+          console.log(offset);
+          const coord = getTranslation(speechElement);
+          if (bodyRect.right < elemRect.right) {
+            // Move element to the left
+            speechElement.style.transform = `translate3d(${coord[0] - offset}px, ${coord[1]}px, 0)`
+          }
+          if (bodyRect.left > elemRect.left) {
+            // Move element to the right
+            speechElement.style.transform = `translate3d(${Math.abs(coord[0]) + offset}px, ${coord[1]}px, 0)`
+          }
+        }
       }
 
       function animateHappy() {
