@@ -1151,7 +1151,8 @@
           if (binName) {
             const overlappingBin = document.querySelectorAll(`.${binName}`)[0];
             closeAllBins();
-            overlappingBin.style.backgroundPositionX = "-130px";
+            const binWidth = window.innerWidth >= 850 ? "-130px" : "-86px";
+            overlappingBin.style.backgroundPositionX = binWidth;
           } else {
             closeAllBins();
           }
