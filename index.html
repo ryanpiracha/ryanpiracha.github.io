@@ -144,7 +144,7 @@
 
       .section {
         margin: 12px 0 36px 0;
-        position: relative; 
+        position: relative;
         bottom: 50px;
       }
       .blueText {
@@ -257,7 +257,7 @@
       .bin {
         height: 300px;
         width: 130px;
-        background-size: contain;
+        background-size: cover;
         background-repeat: no-repeat;
         z-index: 1;
       }
@@ -291,15 +291,15 @@
       }
 
       .trash {
-        background-image: url("./images/bins/trashClosed.svg");
+        background-image: url("./images/bins/trash.svg");
       }
 
       .recycle {
-        background-image: url("./images/bins/recycleClosed.svg");
+        background-image: url("./images/bins/recycle.svg");
       }
 
       .compost {
-        background-image: url("./images/bins/compostClosed.svg");
+        background-image: url("./images/bins/compost.svg");
       }
 
       .score {
@@ -442,8 +442,8 @@
 
       .startButton {
         position: relative;
-        bottom:0;
-        left:0;
+        bottom: 0;
+        left: 0;
         margin-top: 30px;
       }
 
@@ -463,15 +463,14 @@
         text-decoration: underline;
       }
 
-
       @media only screen and (max-width: 850px) {
-      .desktop {
-        display: none;
-      }
-        .score{
+        .desktop {
+          display: none;
+        }
+        .score {
           font-size: 20px;
         }
-        .button{
+        .button {
           font-size: 12px;
         }
         .item {
@@ -480,7 +479,7 @@
         .description {
           font-size: 18px;
         }
-        .bin{
+        .bin {
           height: 200px;
           width: 86px; /* width ratio 43.3% of height*/
         }
@@ -510,18 +509,18 @@
         }
         p,
         ul {
-        font-family: font2;
-        font-size: 20px;
-        padding-left: 10px;
-        padding-right: 15px;
+          font-family: font2;
+          font-size: 20px;
+          padding-left: 10px;
+          padding-right: 15px;
         }
-      .bulletList {
-        padding: 16px 25px;
-      }
-      #win-modal{
-        width: 90%;
-        padding: 20px;
-      }
+        .bulletList {
+          padding: 16px 25px;
+        }
+        #win-modal {
+          width: 90%;
+          padding: 20px;
+        }
       }
     </style>
     <link rel="shortcut icon" href="./favicon.ico" />
@@ -533,13 +532,19 @@
         <div class="score-elements">
           <div class="score"></div>
           <div class="attempted"></div>
-        </div>  
+        </div>
 
         <div>
           <button onclick="displayModal('#moreInfo-modal')" class="button">
-            More Info
+            Learn More
           </button>
-          <a href="CompostingInfogrpahic.pdf" target="_blank" class="button desktop"> Download Infographic</a>
+          <a
+            href="CompostingInfogrpahic.pdf"
+            target="_blank"
+            class="button desktop"
+          >
+            Download Infographic</a
+          >
         </div>
       </div>
       <div class="descriptionBubble">
@@ -560,15 +565,15 @@
           <div class="shadow"></div>
         </div>
 
-       <div class="binWrapper">
-         <div class="bin recycle"></div>
-         <div class="shadow"></div>
-      </div> 
+        <div class="binWrapper">
+          <div class="bin recycle"></div>
+          <div class="shadow"></div>
+        </div>
 
-      <div class="binWrapper">
+        <div class="binWrapper">
           <div class="bin compost"></div>
           <div class="shadow"></div>
-      </div>
+        </div>
       </div>
 
       <!-- <div class="binShadows">
@@ -580,18 +585,23 @@
 
     <div id="win-modal">
       <h2 class="blueText">You did it!</h2>
-      <h3 id="final-score" class="greenText"></h3></br>
-      <p class="winText">Thanks for playing!</p></br>
+      <h3 id="final-score" class="greenText"></h3>
+      <br />
+      <p class="winText">Thanks for playing!</p>
+      <br />
       <p class="winText">
-        Click below to play again, learn more, or download a handy infographic to keep in your kitchen!
+        Click below to play again, learn more, or download a handy infographic
+        to keep in your kitchen!
       </p>
       <button onclick="startOver()" class="button startButton">
         Play Again
       </button>
       <button onclick="displayModal('#moreInfo-modal')" class="button">
-        More Info
+        Learn More
       </button>
-      <a href="CompostingInfogrpahic.pdf" target="_blank" class="button"> Download Infographic</a>
+      <a href="CompostingInfogrpahic.pdf" target="_blank" class="button">
+        Download Infographic</a
+      >
     </div>
 
     <div id="moreInfo-modal">
@@ -603,11 +613,12 @@
       </button>
 
       <div class="section">
-        <h1>More Info:</h1>
+        <h1>Learn More:</h1>
 
         <p>
-          This game is a basic guide to sorting your waste. But many factors can
-          affect where an item should go.
+          This game is a simplified guide to sorting your waste. However, many
+          different factors can determine where an item should go. Read below to
+          learn more.
         </p>
       </div>
 
@@ -724,11 +735,9 @@
       </div>
     </div>
 
-    
-
     <script>
       // Declare Data
-      let defaultCorrect = "Hooray!"
+      let defaultCorrect = "Hooray!";
       let defaultErr = "I don't like it in there!";
       const items = {
         fruits: {
@@ -818,7 +827,7 @@
         "plastic-containers": {
           bin: "recycle",
           trash: defaultErr,
-          recycle: defaultCorrect,
+          recycle: "Hooray! Be sure to wash and dry me first!",
           compost: defaultErr,
         },
         "glass-bottles": {
@@ -849,13 +858,15 @@
           bin: "recycle",
           trash: defaultErr,
           recycle: defaultCorrect,
-          compost: "Some composts accept paper, but recycling is usually better.",
+          compost:
+            "Some composts accept paper, but recycling is usually better.",
         },
         paper: {
           bin: "recycle",
           trash: defaultErr,
           recycle: defaultCorrect,
-          compost: "Some composts accept paper, but recycling is usually better.",
+          compost:
+            "Some composts accept paper, but recycling is usually better.",
         },
         cardboard: {
           bin: "recycle",
@@ -885,7 +896,8 @@
           bin: "trash",
           trash: defaultCorrect,
           recycle: defaultErr,
-          compost: "If I'm clean, some composts accept me, but the trash is usually better",
+          compost:
+            "If I'm clean, some composts accept me, but the trash is usually better",
         },
         "paper-plates": {
           bin: "trash",
@@ -1008,7 +1020,7 @@
         const bins = document.querySelectorAll(".bin");
         for (let i = 0; i < bins.length; i++) {
           let binName = bins[i].classList.toString().replace("bin", "").trim();
-          bins[i].style = `url("./images/bins/${binName}Closed.png")`;
+          bins[i].style.backgroundPositionX = "0px";
         }
       }
 
@@ -1139,7 +1151,7 @@
           if (binName) {
             const overlappingBin = document.querySelectorAll(`.${binName}`)[0];
             closeAllBins();
-            overlappingBin.style.backgroundImage = `url("./images/bins/${binName}Open.svg")`;
+            overlappingBin.style.backgroundPositionX = "-130px";
           } else {
             closeAllBins();
           }
@@ -1200,21 +1212,24 @@
         displayScore();
       }
 
-
       function clampSpeechBubble() {
-        if (speechElement.style.display !== 'none') {
+        if (speechElement.style.display !== "none") {
           const bodyRect = document.body.getBoundingClientRect();
           const elemRect = speechElement.getBoundingClientRect();
-            const offset = elemRect.right - bodyRect.right
+          const offset = elemRect.right - bodyRect.right;
           console.log(offset);
           const coord = getTranslation(speechElement);
           if (bodyRect.right < elemRect.right) {
             // Move element to the left
-            speechElement.style.transform = `translate3d(${coord[0] - offset}px, ${coord[1]}px, 0)`
+            speechElement.style.transform = `translate3d(${
+              coord[0] - offset
+            }px, ${coord[1]}px, 0)`;
           }
           if (bodyRect.left > elemRect.left) {
             // Move element to the right
-            speechElement.style.transform = `translate3d(${Math.abs(coord[0]) + offset}px, ${coord[1]}px, 0)`
+            speechElement.style.transform = `translate3d(${
+              Math.abs(coord[0]) + offset
+            }px, ${coord[1]}px, 0)`;
           }
         }
       }
@@ -1263,19 +1278,19 @@
 
       // preload images
       let preloadedImages = [
-        "./images/bins/trashOpen.svg",
-        "./images/bins/recycleOpen.svg",
-        "./images/bins/compostOpen.svg",
+        "./images/bins/trash.svg",
+        "./images/bins/recycle.svg",
+        "./images/bins/compost.svg",
       ];
 
-      Object.keys(items).forEach((item)=>preloadedImages.push(`./images/${item}.svg`)); //TODO: load n+1 item on item n.
+      Object.keys(items).forEach((item) =>
+        preloadedImages.push(`./images/${item}.svg`)
+      ); //TODO: load n+1 item on item n.
       let preloaded = [];
       for (let i = 0; i < preloadedImages.length; i++) {
         let preloadedImage = new Image();
         preloadedImage.src = preloadedImages[i];
         preloaded.push(preloadedImage);
-
-    
       }
     </script>
   </body>
