@@ -838,11 +838,17 @@
         },
         styrofoam: {
           bin: "trash",
-          trash: "Yes, but I'll be in here for millions of years :(",
+          trash: "I'll be in here for millions of years.",
           recycle: defaultErr,
           compost: defaultErr,
         },
         eggshells: {
+          bin: "compost",
+          trash: defaultErr,
+          recycle: defaultErr,
+          compost: defaultCorrect,
+        },
+        "nuts-and-shells": {
           bin: "compost",
           trash: defaultErr,
           recycle: defaultErr,
@@ -868,11 +874,29 @@
           compost:
             "Some composts accept paper, but recycling is usually better.",
         },
+        "construction-paper": {
+          bin: "recycle",
+          trash: defaultErr,
+          recycle: defaultCorrect,
+          compost: "My dyes could be toxic to a compost!",
+        },
+        "shredded-paper": {
+          bin: "compost",
+          trash: defaultErr,
+          recycle: "My fibers are cut too short to be recycled.",
+          compost: defaultCorrect,
+        },
         cardboard: {
           bin: "recycle",
           trash: defaultErr,
           recycle: defaultCorrect,
           compost: "Compost is okay, but I like the recycling better.",
+        },
+        "greasy-cardboard": {
+          bin: "compost",
+          trash: defaultErr,
+          recycle: "I'm greasy, I can't go in there!",
+          compost: defaultCorrect,
         },
         envelopes: {
           bin: "recycle",
@@ -911,6 +935,25 @@
           recycle: "I'm too small for recycle centers to sort!",
           compost: "I'm plastic, I'm not biodegradable!",
         },
+        "compostable-plastic": {
+          bin: "trash",
+          trash: "Correct!",
+          recycle: defaultErr,
+          compost:
+            "Most compost facilities don't actually accept compostable plastics!",
+        },
+        "aluminum-foil": {
+          bin: "recycle",
+          trash: defaultErr,
+          recycle: defaultCorrect,
+          compost: defaultErr,
+        },
+        "beeswax-wraps": {
+          bin: "compost",
+          trash: defaultErr,
+          recycle: defaultErr,
+          compost: defaultCorrect,
+        },
         receipts: {
           bin: "trash",
           trash: defaultCorrect,
@@ -921,7 +964,13 @@
           bin: "recycle",
           trash: defaultErr,
           recycle: defaultCorrect,
-          compost: defaultErr,
+          compost: "I'm coated in plastic, I can't go in there!",
+        },
+        "dead-leaves": {
+          bin: "compost",
+          trash: defaultErr,
+          recycle: defaultErr,
+          compost: defaultCorrect,
         },
       };
 
