@@ -590,8 +590,9 @@
       <p class="winText">Thanks for playing!</p>
       <br />
       <p class="winText">
-        Click below to play again, learn more, or download a handy infographic
-        to keep in your kitchen!
+        Did anything surprise you? There's a lot more info in the Learn More
+        button below. You can also play again or download a handy infographic to
+        keep in your kitchen!
       </p>
       <button onclick="startOver()" class="button startButton">
         Play Again
@@ -780,6 +781,12 @@
           recycle: defaultErr,
           compost: defaultCorrect,
         },
+        "moldy-bread": {
+          bin: "compost",
+          trash: "Mold is compost-safe! I'm already decomposing!",
+          recycle: defaultErr,
+          compost: defaultCorrect,
+        },
         pasta: {
           bin: "compost",
           trash: defaultErr,
@@ -929,9 +936,10 @@
         "paper-towel": {
           bin: "trash",
           trash: defaultCorrect,
-          recycle: defaultErr,
+          recycle:
+            "I'm probably contaminated, or I've been recycled too many times already.",
           compost:
-            "If I'm clean, some composts accept me, but the trash is usually better",
+            "If I'm clean, some composts accept me, but the trash is usually better.",
         },
         "paper-plates": {
           bin: "trash",
